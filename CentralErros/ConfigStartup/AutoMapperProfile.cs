@@ -8,7 +8,7 @@ namespace CentralErros.ConfigStartup
     {
         public AutoMapperProfile()
         {
-            CreateMap<Usuario, UsuarioDTO>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap();
         }
     }
 }

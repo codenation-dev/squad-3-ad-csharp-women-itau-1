@@ -5,7 +5,7 @@ namespace CentralErros.Api.Models
 {
     public class CentralErroContexto : DbContext
     {
-        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public CentralErroContexto(DbContextOptions<CentralErroContexto> options) : base(options)
         {
@@ -24,7 +24,7 @@ namespace CentralErros.Api.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
     }
 }

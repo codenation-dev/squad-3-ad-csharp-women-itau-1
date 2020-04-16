@@ -3,12 +3,12 @@
 
 namespace CentralErros.DTO
 {
-    public class UsuarioDTO
+    public class UserDTO
     {
         public int Id { get; set; }
 
         [Required]
-        public string Nome { get; set; }
+        public string Name { get; set; }
 
         [Required]
         public string Email { get; set; }

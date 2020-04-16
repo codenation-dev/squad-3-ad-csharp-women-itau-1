@@ -27,7 +27,7 @@ namespace CentralErros.Services
             if (request != null)
             {
                 // buscar o usuário na base e add as respectivas claims
-                var user = _context.Usuarios.FirstOrDefault(x => x.Nome == request.UserName);
+                var user = _context.Users.FirstOrDefault(x => x.Name == request.UserName);
                 if (user != null)
                     context.AddRequestedClaims(GetUserClaims(user));
             }
@@ -43,11 +43,11 @@ namespace CentralErros.Services
         }
 
         //add claims
-        public static Claim[] GetUserClaims(Usuario user)
+        public static Claim[] GetUserClaims(User user)
         {
             return new []
             {
-                new Claim(ClaimTypes.Name, user.Nome ?? ""),
+                new Claim(ClaimTypes.Name, user.Name ?? ""),
                 new Claim(ClaimTypes.Email, user.Email.TrimEnd() ?? ""),
                 new Claim(ClaimTypes.Role, "user")
             };

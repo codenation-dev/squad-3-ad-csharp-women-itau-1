@@ -56,7 +56,7 @@ namespace CentralErros
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDbContext<CentralErroContexto>();
-            services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             // config prop IdentitServerStartup

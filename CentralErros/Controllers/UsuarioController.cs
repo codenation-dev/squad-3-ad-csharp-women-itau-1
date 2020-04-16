@@ -15,14 +15,14 @@ namespace CentralErros.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
-    public class UsuarioController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly IUsuarioService _usuarioService;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
-        public UsuarioController(IUsuarioService usuarioService, IMapper mapper)
+            public UserController(IUserService userService, IMapper mapper)
         {
-            _usuarioService = usuarioService;
+            _userService = userService;
             _mapper = mapper;
         }
 
@@ -30,13 +30,13 @@ namespace CentralErros.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<UsuarioDTO> Get(int id)
+        public ActionResult<UserDTO> Get(int id)
         {
-            var usuario = _usuarioService.ProcurarPorId(id);
+            var user = _userService.FindById(id);
 
-            if (usuario != null)
+            if (user!= null)
             {
-                var retorno = _mapper.Map<UsuarioDTO>(usuario);
+                var retorno = _mapper.Map<UserDTO>(user);
 
                 return Ok(retorno);
             }
@@ -47,45 +47,43 @@ namespace CentralErros.Controllers
         // POST api/cliente
         // binding argumento
         [HttpPost]
-        public ActionResult<UsuarioDTO> Post([FromBody]UsuarioDTO value)
+        public ActionResult<UserDTO> Post([FromBody]UserDTO value)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ErrorResponse.FromModelState(ModelState));
 
           
-            var usuario = new Usuario()
+            var user = new User()
             {
-                Nome = value.Nome,
+                Name = value.Name,
                 Email = value.Email,
                 Password = value.Password
             };
 
-            var retornoUsuario = _usuarioService.Salvar(usuario);
+            var returnUser = _userService.Save(user);
 
-            var retorno = _mapper.Map<UsuarioDTO>(retornoUsuario);
+            var retorno = _mapper.Map<UserDTO>(returnUser);
 
             return Ok(retorno);
         }
 
         // POST api/cliente
         [HttpPut]
-        public ActionResult<UsuarioDTO> Put([FromBody] UsuarioDTO value)
+        public ActionResult<UserDTO> Put([FromBody] UserDTO value)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-
-
-            var usuario = new Usuario()
+            var user = new User()
             {
-                Nome = value.Nome,
+                Name = value.Name,
                 Email = value.Email,
                 Password = value.Password
             };
 
-            var retornoUsuario = _usuarioService.Salvar(usuario);
+            var returnUser = _userService.Save(user);
 
-            var retorno = _mapper.Map<UsuarioDTO>(retornoUsuario);
+            var retorno = _mapper.Map<UserDTO>(returnUser);
 
             return Ok(retorno);
         }

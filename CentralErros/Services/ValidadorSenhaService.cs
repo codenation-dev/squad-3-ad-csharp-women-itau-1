@@ -20,7 +20,7 @@ namespace CentralErros.Services
         public Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {
             // acessar cliente na base
-            var user = _context.Usuarios.FirstOrDefault(x => x.Nome == context.UserName);
+            var user = _context.Users.FirstOrDefault(x => x.Name == context.UserName);
 
             // verificar a senha
             if (user != null && user.Password.TrimEnd() == context.Password)
