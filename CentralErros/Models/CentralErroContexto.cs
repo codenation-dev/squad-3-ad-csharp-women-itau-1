@@ -1,0 +1,30 @@
+﻿using CentralErros.Api.Models.Configurations;
+using Microsoft.EntityFrameworkCore;
+
+namespace CentralErros.Api.Models
+{
+    public class CentralErroContexto : DbContext
+    {
+        public DbSet<Usuario> Usuarios { get; set; }
+
+        public CentralErroContexto(DbContextOptions<CentralErroContexto> options) : base(options)
+        {
+
+        }
+        
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //confirmação de configuraão para utilizar com In Memory Database
+            if (!optionsBuilder.IsConfigured)
+                optionsBuilder.UseSqlServer("Server=localhost,1433;Database=CentralErros;User Id =sa;Password=jaque@123;Trusted_Connection=False;");
+
+            //optionsBuilder.UseSqlite("Data Source=nome-do-arq.db");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
+        }
+    }
+}
