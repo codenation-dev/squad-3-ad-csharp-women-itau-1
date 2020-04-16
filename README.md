@@ -6,7 +6,7 @@
 
 - Juliane | [@julianeventura](https://github.com/julianeventura)
 
-- Marcela | [@](https://github.com/)
+- Marcela | [@marceladovale](https://github.com/marceladovale)
 
 - Priscila | [@iprih](https://github.com/iprih)
 
