@@ -2,13 +2,13 @@
 
 ## Trabalho desenvolvido por:
 
-- Jaqueline | [@Jaquelaurenti](https://github.com/Jaquelaurenti)
+- [Jaqueline Laurenti] (https://www.linkedin.com/in/jaqueline-laurenti-30b15933/)
 
-- Juliane | [@julianeventura](https://github.com/julianeventura)
+- [Juliane Ventura] (https://linkedin.com/in/julianeventura)
 
-- Marcela | [@marceladovale](https://github.com/marceladovale)
+- [Marcela do Vale] (https://www.linkedin.com/in/marceladovale/)
 
-- Priscila | [@iprih](https://github.com/iprih)
+- [Priscila Silva] (https://linkedin.com/in/silva-priscila)
 
 # Central de Erros
 ## Objetivo
