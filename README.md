@@ -2,13 +2,13 @@
 
 ## Trabalho desenvolvido por:
 
-- [Jaqueline Laurenti] (https://www.linkedin.com/in/jaqueline-laurenti-30b15933/)
+- [Jaqueline Laurenti](https://www.linkedin.com/in/jaqueline-laurenti-30b15933/)
 
-- [Juliane Ventura] (https://linkedin.com/in/julianeventura)
+- [Juliane Ventura](https://linkedin.com/in/julianeventura)
 
-- [Marcela do Vale] (https://www.linkedin.com/in/marceladovale/)
+- [Marcela do Vale](https://www.linkedin.com/in/marceladovale/)
 
-- [Priscila Silva] (https://linkedin.com/in/silva-priscila)
+- [Priscila Silva](https://linkedin.com/in/silva-priscila)
 
 # Central de Erros
 ## Objetivo
