@@ -16,8 +16,13 @@ namespace CentralErros.Api.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //confirmação de configuraão para utilizar com In Memory Database
+            //if (!optionsBuilder.IsConfigured)
+            //optionsBuilder.UseSqlServer("Server=localhost,1433;Database=CentralErros;User Id =sa;Password=jaque@123;Trusted_Connection=False;");
+
             if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseSqlServer("Server=localhost,1433;Database=CentralErros;User Id =sa;Password=jaque@123;Trusted_Connection=False;");
+            {
+                optionsBuilder.UseInMemoryDatabase(databaseName: "CentralErros");
+            }
 
             //optionsBuilder.UseSqlite("Data Source=nome-do-arq.db");
         }
