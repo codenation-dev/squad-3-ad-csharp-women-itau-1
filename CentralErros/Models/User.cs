@@ -29,7 +29,13 @@ namespace CentralErros.Api.Models
         [StringLength(255)]
         [Required]
         public string Password { get; set; }
+
+        [Column("TOKEN")]
+        [Required]
         public string Token { get; internal set; }
+
+        [Column("EXPIRATION")]
+        [Required]
         public DateTime Expiration { get; internal set; }
     }
 }

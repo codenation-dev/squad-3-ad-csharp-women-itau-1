@@ -17,13 +17,12 @@ namespace CentralErros.Services
 
         public User FindById(int userId)
         {
-            //utilzar metodo Find
+         
             return _context.Users.Find(userId);
         }
 
         public IList<User> FindByName(string name)
         {
-            //utilizar método Where
             return _context.Users.Where(x => x.Name == name).ToList();
         }
 

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace CentralErros.DTO
@@ -15,6 +16,7 @@ namespace CentralErros.DTO
 
         [Required]
         public string Password { get; set; }
+
 
     }
 }

@@ -38,13 +38,13 @@ namespace CentralErros.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<UserDTO> Get(int id)
+        public ActionResult<User> Get(int id)
         {
             var user = _userService.FindById(id);
 
             if (user!= null)
             {
-                var retorno = _mapper.Map<UserDTO>(user);
+                var retorno = _mapper.Map<User>(user);
 
                 return Ok(retorno);
             }
@@ -60,12 +60,33 @@ namespace CentralErros.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ErrorResponse.FromModelState(ModelState));
 
-          
+            var claims = new[]
+                {
+                new Claim(JwtRegisteredClaimNames.UniqueName, value.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+
+                };
+            var Key = Encoding.ASCII.GetBytes("AppSettings.Secret");
+            var credenciais = new SigningCredentials(new SymmetricSecurityKey(Key), SecurityAlgorithms.HmacSha256);
+            var exp = DateTime.UtcNow.AddHours(2);
+            var emitter = "AppSettings.Emitter";
+            var validOn = "AppSettings.ValidOn";
+
+            var token = new JwtSecurityToken(
+            issuer: emitter,
+            audience: validOn,
+            claims: claims,
+            signingCredentials: credenciais);
+
+            var Token = new JwtSecurityTokenHandler().WriteToken(token);
+
             var user = new User()
             {
                 Name = value.Name,
                 Email = value.Email,
-                Password = value.Password
+                Password = value.Password,
+                Token = Token,
+                Expiration = exp
             };
 
             var returnUser = _userService.Save(user);

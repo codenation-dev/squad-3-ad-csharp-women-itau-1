@@ -48,7 +48,7 @@ namespace CentralErros.Services
             return new []
             {
                 new Claim(ClaimTypes.Name, user.Name ?? ""),
-                new Claim(ClaimTypes.Email, user.Email.TrimEnd() ?? ""),
+                new Claim(ClaimTypes.Email, user.Email.TrimEnd() ?? ""),                
                 new Claim(ClaimTypes.Role, "user")
             };
         }
