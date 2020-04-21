@@ -1,4 +1,5 @@
 ﻿using CentralErros.Api.Models.Configurations;
+using CentralErros.Models;
 using CentralErros.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,7 +9,7 @@ namespace CentralErros.Api.Models
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Environment> Environments { get; set; }
-        public DbSet<Environment> Levels { get; set; }
+        public DbSet<Level> Levels { get; set; }
 
         public CentralErroContexto(DbContextOptions<CentralErroContexto> options) : base(options)
         {
