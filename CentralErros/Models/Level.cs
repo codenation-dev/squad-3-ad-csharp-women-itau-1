@@ -19,9 +19,6 @@ namespace CentralErros.Models
         [StringLength(50)]
         [Required]
         public string LevelName { get; set; }
-
-        //linka com tabela ErrorOcurrence   
-        //public ICollection<ErrorOcurrence> ErrorsOcurrences { get; set; }
-
+        
     }
 }

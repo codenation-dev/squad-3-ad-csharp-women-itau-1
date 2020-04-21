@@ -26,6 +26,11 @@ namespace CentralErros.Services
             return _context.Users.Where(x => x.Name == name).ToList();
         }
 
+        public User FindByLogin(string email, string password)
+        {
+            return _context.Users.Where(x => x.Email == email && x.Password == password).FirstOrDefault();
+        }
+
         public User Save(User user)
         {
             var state = user.Id == 0 ? EntityState.Added : EntityState.Modified;            
