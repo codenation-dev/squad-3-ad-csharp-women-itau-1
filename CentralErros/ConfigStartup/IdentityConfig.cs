@@ -60,23 +60,13 @@ namespace CentralErros.ConfigStartup
                 new TestUser
                 {
                     SubjectId = "1",
-                    Username = "sheyla",
-                    Password = "password",
+                    Username = "jaque",
+                    Password = "123456",
                     Claims = new [] { 
                         new Claim(ClaimTypes.Role, "admin"), 
-                        new Claim(ClaimTypes.Email, "sheyla@mail.com")
+                        new Claim(ClaimTypes.Email, "jaque@mail.com")
                     }
                 },
-                new TestUser
-                {
-                    SubjectId = "2",
-                    Username = "elis",
-                    Password = "password",
-                    Claims = new [] { 
-                        new Claim(ClaimTypes.Role, "user"), 
-                        new Claim(ClaimTypes.Email, "elis@mail.com")
-                    }
-                }
             };
         }
     }

@@ -8,6 +8,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using System;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CentralErros.Controllers
 {
@@ -19,8 +26,9 @@ namespace CentralErros.Controllers
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private readonly CentralErroContexto _context;
 
-            public UserController(IUserService userService, IMapper mapper)
+        public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;
@@ -90,36 +98,42 @@ namespace CentralErros.Controllers
 
 
         [HttpPost("authToken")]
-        [System.Obsolete]
-        public async Task<ActionResult<TokenResponse>> AuthToken([FromBody]TokenDTO value)
+        public IActionResult RequestToken([FromBody]User requestUser)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            // async request - await para aguardar retorno
-            var disco = await DiscoveryClient.GetAsync("http://localhost:5001");
-
-            // nesta parte, temos um exemplo de requisição com o tipo "password" 
-            // esta é a forma mais comum
-            var httpClient = new HttpClient();
-            var tokenResponse = await httpClient.RequestPasswordTokenAsync(new PasswordTokenRequest
+            if (requestUser.Email == requestUser.Email && requestUser.Password == requestUser.Password)
             {
-                Address = disco.TokenEndpoint,
-                ClientId = "codenation.api_client",
-                ClientSecret = "codenation.api_secret",
-                UserName = value.UserName,
-                Password = value.Password,
-                Scope = "codenation"
-            });
+                var claims = new[]
+                {
+                new Claim(JwtRegisteredClaimNames.UniqueName, requestUser.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
 
-            // Se não tiver tiver um erro retornar token
-            if (!tokenResponse.IsError)
-            {
-                return Ok(tokenResponse);
+                };
+                var Key = Encoding.ASCII.GetBytes("AppSettings.Secret");
+                var credenciais = new SigningCredentials(new SymmetricSecurityKey(Key), SecurityAlgorithms.HmacSha256);
+                var exp = DateTime.UtcNow.AddHours(2);
+                var emitter = "AppSettings.Emitter";
+                var validOn = "AppSettings.ValidOn";
+
+                var token = new JwtSecurityToken(
+                issuer: emitter,
+                audience: validOn,
+                claims: claims,
+                signingCredentials: credenciais);
+
+                var Token = new JwtSecurityTokenHandler().WriteToken(token);
+
+                _userService.RequestTokenSave(requestUser, Token, exp);
+
+                return Ok(new
+                {
+                    TokenJWT = Token,
+                    Expiration = exp
+
+                });
+
             }
 
-            //retorna não autorizado e descrição do erro
-            return Unauthorized(ErrorResponse.FromTokenResponse(tokenResponse));
+            return BadRequest("Credenciais Inválidas");
         }
     }
 }

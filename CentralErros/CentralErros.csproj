@@ -49,5 +49,6 @@
     <Compile Remove="Services\CompraService.cs" />
     <Compile Remove="DTO\PromocaoDTO.cs" />
     <Compile Remove="DTO\PromocaoProdutoDTO.cs" />
+    <Compile Remove="DTO\TokenDTO.cs" />
   </ItemGroup>
 </Project>

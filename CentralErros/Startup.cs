@@ -58,6 +58,7 @@ namespace CentralErros
             services.AddDbContext<CentralErroContexto>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEnvironmentService, EnvironmentService>();
+            services.AddScoped<ILevelService, LevelService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             // config prop IdentitServerStartup

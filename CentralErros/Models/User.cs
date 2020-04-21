@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -28,6 +29,7 @@ namespace CentralErros.Api.Models
         [StringLength(255)]
         [Required]
         public string Password { get; set; }
-        
+        public string Token { get; internal set; }
+        public DateTime Expiration { get; internal set; }
     }
 }
