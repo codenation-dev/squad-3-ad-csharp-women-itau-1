@@ -6,6 +6,7 @@ namespace CentralErros.Api.Models
     public class CentralErroContexto : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Environment> Environments { get; set; }
 
         public CentralErroContexto(DbContextOptions<CentralErroContexto> options) : base(options)
         {
@@ -30,6 +31,7 @@ namespace CentralErros.Api.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new EnvironmentConfiguration());
         }
     }
 }

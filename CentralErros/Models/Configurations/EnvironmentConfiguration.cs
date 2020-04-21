@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CentralErros.Api.Models.Configurations
 {
-    public class UserConfiguration : IEntityTypeConfiguration<User>
+    public class EnvironmentConfiguration : IEntityTypeConfiguration<Environment>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<Environment> builder)
         {
             builder.HasKey(x => x.Id);
 
