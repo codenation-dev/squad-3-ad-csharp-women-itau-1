@@ -10,6 +10,8 @@ namespace CentralErros.ConfigStartup
         {
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<Environment, EnvironmentDTO>().ReverseMap();
+            CreateMap<Level, LevelDTO>().ReverseMap();//pri
+
         }
     }
 }
