@@ -19,11 +19,13 @@ namespace CentralErros.Controllers
     {
         private readonly IEnvironmentService _envService;
         private readonly IMapper _mapper;
+        private readonly CentralErroContexto _context;
 
-        public EnvironmentController(IEnvironmentService envService, IMapper mapper)
+        public EnvironmentController(IEnvironmentService envService, IMapper mapper, CentralErroContexto context)
         {
             _envService = envService;
             _mapper = mapper;
+            _context = context;
         }
 
         [HttpGet("{id}")]
@@ -62,6 +64,27 @@ namespace CentralErros.Controllers
             var retorno = _mapper.Map<EnvironmentDTO>(returnEnv);
 
             return Ok(retorno);
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Environment> Delete(int id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            Environment env = _envService.FindById(id);
+
+            if (env != null)
+            {
+                _context.Environments.Remove(env);
+                var retorno = _envService.SaveOrUpdate(env);
+
+                return Ok(retorno);
+            }
+            else
+                return NotFound();
         }
 
 

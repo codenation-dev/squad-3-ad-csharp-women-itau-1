@@ -28,13 +28,13 @@ namespace CentralErros.Controllers
         private readonly IMapper _mapper;
         private readonly CentralErroContexto _context;
 
-        public UserController(IUserService userService, IMapper mapper)
+        public UserController(IUserService userService, IMapper mapper, CentralErroContexto context)
         {
             _userService = userService;
             _mapper = mapper;
+            _context = context;
         }
 
-        // GET api/cliente/{id}
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -52,8 +52,7 @@ namespace CentralErros.Controllers
                 return NotFound();
         }
 
-        // POST api/cliente
-        // binding argumento
+     
         [HttpPost]
         public ActionResult<UserDTO> Post([FromBody]UserDTO value)
         {
@@ -117,44 +116,27 @@ namespace CentralErros.Controllers
             return Ok(retorno);
         }
 
-
-        [HttpPost("authToken")]
-        public IActionResult RequestToken([FromBody]User requestUser)
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<User> Delete(int id)
         {
-            if (requestUser.Email == requestUser.Email && requestUser.Password == requestUser.Password)
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            User user = _userService.FindById(id);
+
+            if (user != null)
             {
-                var claims = new[]
-                {
-                new Claim(JwtRegisteredClaimNames.UniqueName, requestUser.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                _context.Users.Remove(user);
+                var retorno = _userService.Save(user);
 
-                };
-                var Key = Encoding.ASCII.GetBytes("AppSettings.Secret");
-                var credenciais = new SigningCredentials(new SymmetricSecurityKey(Key), SecurityAlgorithms.HmacSha256);
-                var exp = DateTime.UtcNow.AddHours(2);
-                var emitter = "AppSettings.Emitter";
-                var validOn = "AppSettings.ValidOn";
-
-                var token = new JwtSecurityToken(
-                issuer: emitter,
-                audience: validOn,
-                claims: claims,
-                signingCredentials: credenciais);
-
-                var Token = new JwtSecurityTokenHandler().WriteToken(token);
-
-                _userService.RequestTokenSave(requestUser, Token, exp);
-
-                return Ok(new
-                {
-                    TokenJWT = Token,
-                    Expiration = exp
-
-                });
-
+                return Ok(retorno);
             }
-
-            return BadRequest("Credenciais Inválidas");
+            else
+                return NotFound();
         }
+
+
     }
 }

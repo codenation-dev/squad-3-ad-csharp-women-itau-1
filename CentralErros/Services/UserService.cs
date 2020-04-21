@@ -28,22 +28,12 @@ namespace CentralErros.Services
 
         public User Save(User user)
         {
-            var existe = _context.Users
-                                .Where(x => x.Id == user.Id)
-                                .FirstOrDefault();
-
-            if (existe == null)
-                _context.Users.Add(user);
-            else
-            {
-                existe.Name = user.Name;
-            }
-
+            var state = user.Id == 0 ? EntityState.Added : EntityState.Modified;            
+            _context.Entry(user).State = state;
             _context.SaveChanges();
-
             return user;
         }
-
+        
         public User RequestTokenSave(User requestUser, string token, DateTime exp)
         {
 
