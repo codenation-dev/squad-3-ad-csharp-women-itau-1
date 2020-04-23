@@ -8,11 +8,10 @@ namespace CentralErros.Api.Models
     [Table("USER")]
     public class User
     {
-        //1 para N
-        //1 para 1
         [Column("ID")]
         [Required]
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Column("NAME")]

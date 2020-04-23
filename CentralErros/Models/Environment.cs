@@ -10,6 +10,7 @@ namespace CentralErros.Api.Models
         [Column("ID")]
         [Required]
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Column("NAME")]

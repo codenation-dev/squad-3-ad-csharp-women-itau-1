@@ -31,7 +31,7 @@ namespace CentralErros.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<EnvironmentDTO> Get(int id)
+        public ActionResult<Environment> Get(int id)
         {
             var env = _envService.FindById(id);
 
@@ -54,14 +54,13 @@ namespace CentralErros.Controllers
 
             var env = new Environment()
             {
-                Id = value.Id,
                 Name = value.Name,
                 
             };
 
             var returnEnv = _envService.SaveOrUpdate(env);
 
-            var retorno = _mapper.Map<EnvironmentDTO>(returnEnv);
+            var retorno = _mapper.Map<Environment>(returnEnv);
 
             return Ok(retorno);
         }

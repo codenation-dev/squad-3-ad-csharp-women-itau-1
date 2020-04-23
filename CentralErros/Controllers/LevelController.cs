@@ -30,12 +30,12 @@ namespace CentralErros.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<LevelDTO> Get(int id)
+        public ActionResult<Level> Get(int id)
         {
             var level = _levelService.FindByIdLevel(id);
             if (level != null)
             {
-                var retorno = _mapper.Map<LevelDTO>(level);
+                var retorno = _mapper.Map<Level>(level);
                 return Ok(retorno);
             }
             else
@@ -58,20 +58,20 @@ namespace CentralErros.Controllers
 
             var resLevel = _levelService.SaveOrUpdate(level);
 
-            var retorno = _mapper.Map<LevelDTO>(resLevel);
+            var retorno = _mapper.Map<Level>(resLevel);
 
             return Ok(retorno);
         }
 
         // GETALL: api/Level/
         [HttpGet]
-        public ActionResult<IEnumerable<LevelDTO>> GetLevels()
+        public ActionResult<IEnumerable<Level>> GetLevels()
         {
             var level = _levelService.FindAllLevels();
             if (level != null)
             {
                 
-                return Ok(level.Select(x => _mapper.Map<LevelDTO>(x)).ToList());
+                return Ok(level.Select(x => _mapper.Map<Level>(x)).ToList());
             }
             else
                 return NotFound();

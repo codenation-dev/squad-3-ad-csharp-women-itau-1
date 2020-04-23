@@ -8,7 +8,6 @@ namespace CentralErros.DTO
 {
     public class LevelDTO
     {
-        public int IdLevel { get; set; }
 
         [Required]
         public string LevelName { get; set; }
