@@ -12,6 +12,7 @@ namespace CentralErros.Models
     {
         [Column("ID")]
         [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] //testar autoincremento
         [Key]
         public int IdLevel { get; set; }
 

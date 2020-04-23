@@ -8,7 +8,6 @@ namespace CentralErros.DTO
 {
     public class LevelDTO
     {
-        [Required]
         public int IdLevel { get; set; }
 
         [Required]

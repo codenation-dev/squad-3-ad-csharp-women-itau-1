@@ -26,7 +26,7 @@ namespace CentralErros.ConfigStartup
             {
                 Title = "API - Central de Erros @Codenation em Parceria  com @Itau",
                 Version = "v1",
-                Description = "Esta API é responsavel pelo central de Erros",
+                Description = "Esta API é responsavel pela central de Erros",
                 Contact = new Contact() { Name = "@JaqueLaurenti", Email = "jaquelinelaurenti@mail.com" }
             };
 
