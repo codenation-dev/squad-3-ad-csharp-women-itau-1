@@ -20,6 +20,7 @@ namespace CentralErros.Models
         [StringLength(50)]
         [Required]
         public string LevelName { get; set; }
-        
+
+        public virtual ICollection<ErrorOccurrence> ErrorOccurrences { get; set; }
     }
 }

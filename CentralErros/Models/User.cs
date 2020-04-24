@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CentralErros.Models;
 
 namespace CentralErros.Api.Models
 {
@@ -36,5 +37,7 @@ namespace CentralErros.Api.Models
         [Column("EXPIRATION")]
         [Required]
         public DateTime Expiration { get; internal set; }
+
+        public virtual ICollection<ErrorOccurrence> ErrorOccurrences { get; set; }
     }
 }
