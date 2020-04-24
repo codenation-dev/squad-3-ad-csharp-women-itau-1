@@ -10,6 +10,7 @@ namespace CentralErros.Api.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Environment> Environments { get; set; }
         public DbSet<Level> Levels { get; set; }
+        public DbSet<ErrorOccurrence> Errors { get; set; }
 
         public CentralErroContexto(DbContextOptions<CentralErroContexto> options) : base(options)
         {
@@ -36,6 +37,7 @@ namespace CentralErros.Api.Models
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new EnvironmentConfiguration());
             modelBuilder.ApplyConfiguration(new LevelConfiguration());
+            modelBuilder.ApplyConfiguration(new ErrorConfiguration());
         }
     }
 }
