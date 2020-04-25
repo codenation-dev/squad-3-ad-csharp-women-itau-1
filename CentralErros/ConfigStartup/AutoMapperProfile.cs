@@ -2,6 +2,7 @@
 using CentralErros.Api.Models;
 using CentralErros.DTO;
 using CentralErros.Models;
+using CentralErros.Services;
 
 namespace CentralErros.ConfigStartup
 {
@@ -12,7 +13,7 @@ namespace CentralErros.ConfigStartup
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<Environment, EnvironmentDTO>().ReverseMap();
             CreateMap<Level, LevelDTO>().ReverseMap();
-
+            CreateMap<ErrorOccurrence, ErrorOccurrenceDTO>().ReverseMap();
         }
     }
 }

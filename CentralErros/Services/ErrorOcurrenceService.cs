@@ -36,32 +36,6 @@ namespace CentralErros.Services
                 .ToList();
         }
 
-        public List<ErrorOccurrence> FindErrorsByLevel(string level)
-        {
-            return _context.Errors
-                .Where(x => x.LevelName == level)
-                .ToList();
-        }
-
-        public List<ErrorOccurrence> OrderByLevel()
-        {
-            return _context.Errors
-                .OrderBy(x => x.LevelId)
-                .ToList();
-        }
-
-        public List<ErrorOccurrence> FindErrorsByEnvironment(string env)
-        {
-            return _context.Errors
-                .Where(x => x.EnvironmentName == env)
-                .ToList();
-        }
-
-        public bool ErrorExists(int id)
-        {
-            return _context.Errors.Any(x => x.Id == id);
-        }
-
         public List<ErrorOccurrence> GetAllErrors()
         {
             return _context.Errors.ToList();
@@ -80,6 +54,7 @@ namespace CentralErros.Services
                 existe.Id = error.Id;
                 existe.Title = error.Title;
                 existe.RegistrationDate = error.RegistrationDate;
+                existe.Origin = error.Origin;
                 existe.Filed = error.Filed;
                 existe.Details = error.Details;
                 existe.UserId = error.UserId;
@@ -99,6 +74,5 @@ namespace CentralErros.Services
         {
             return _context.Errors.Any(x => x.Filed == error.Filed);
         }
-
     }
 }

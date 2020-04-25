@@ -4,6 +4,7 @@ using AutoMapper;
 using CentralErros.Api.Models;
 using CentralErros.ConfigStartup;
 using CentralErros.Filters;
+using CentralErros.Models;
 using CentralErros.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -59,6 +60,7 @@ namespace CentralErros
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEnvironmentService, EnvironmentService>();
             services.AddScoped<ILevelService, LevelService>();
+            services.AddScoped<IErrorOcurrenceService, ErrorOcurrenceService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             // config prop IdentitServerStartup
