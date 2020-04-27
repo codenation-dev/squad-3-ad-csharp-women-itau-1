@@ -18,6 +18,10 @@ namespace CentralErros.Services
         {
             return _context.Environments.Find(id);
         }
+        public Environment FindByName(string name)
+        {
+            return _context.Environments.FirstOrDefault(x => x.Name == name);
+        }
 
         public IList<Environment> FindAll()
         {

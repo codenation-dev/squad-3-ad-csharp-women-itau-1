@@ -38,7 +38,7 @@ namespace CentralErros.Models
         public virtual User User { get; set; }
 
         [Column("TOKEN_USER"), Required]
-        public int TokenUser { get; set; }
+        public string TokenUser { get; set; }
         [ForeignKey("TokenUser"), Required]
         public virtual User Token { get; set; }
 

@@ -7,6 +7,7 @@ namespace CentralErros.Services
     {
         Environment FindById(int id);
         IList<Environment> FindAll();
+        Environment FindByName(string name);
         Environment SaveOrUpdate(Environment env);
     }
 }

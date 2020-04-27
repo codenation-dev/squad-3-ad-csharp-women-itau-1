@@ -8,14 +8,9 @@ namespace CentralErros.DTO
 {
     public class ErrorOccurrenceDTO
     {
-        public int Id { get; set; }
-
         [Required]
         public string Title { get; set; }
 
-        [Required]
-        public DateTime RegistrationDate { get; set; }
-        
         [Required]
         public string Origin { get; set; }
 
@@ -26,19 +21,10 @@ namespace CentralErros.DTO
         public string Details { get; set; }
 
         [Required]
-        public int UserId { get; set; }
-
-        [Required]
-        public int TokenUser { get; set; }
-
-        [Required]
-        public int EnvironmentId { get; set; }
+        public string UserName { get; set; }
 
         [Required]
         public string EnvironmentName { get; set; }
-
-        [Required]
-        public int LevelId { get; set; }
 
         [Required]
         public string LevelName { get; set; }

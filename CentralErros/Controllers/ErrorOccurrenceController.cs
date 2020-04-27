@@ -21,13 +21,23 @@ namespace CentralErros.Controllers
         private readonly IMapper _mapper;
         private readonly CentralErroContexto _contexto;
         private readonly IErrorOcurrenceService _erroService;
+        private readonly ILevelService _levelService;
+        private readonly IEnvironmentService _environmentService;
+        private readonly IUserService _userService;
 
         public ErrorOccurrenceController(IMapper mapper, CentralErroContexto contexto,
-            IErrorOcurrenceService erroService)
+           IErrorOcurrenceService erroService,
+           IUserService userService,
+           ILevelService levelService,
+           IEnvironmentService environmentService)
         {
             _mapper = mapper;
             _contexto = contexto;
             _erroService = erroService;
+            _userService = userService;
+            _levelService = levelService;
+            _environmentService = environmentService;
+
         }
 
         // GET: api/ErrorOccurence
@@ -75,9 +85,28 @@ namespace CentralErros.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var error = _mapper.Map<ErrorOccurrence>(value);
-            var retorno = _erroService.SaveOrUpdate(error);
-            return Ok(_mapper.Map<ErrorOccurrenceDTO>(retorno));
+            // Montando as fk's
+            var user = _userService.FindByName(value.UserName);
+            var level = _levelService.FindByLevelName(value.LevelName);
+            var env = _environmentService.FindByName(value.EnvironmentName);
+            var errorOcurrence = new ErrorOccurrence()
+            {
+                Title = value.Title,
+                RegistrationDate = DateTime.Now,
+                Origin = value.Origin,
+                Filed = value.Filed,
+                Details = value.Details,
+                TokenUser = user.Token,
+                UserId = user.Id,
+                EnvironmentName = env.Name,
+                EnvironmentId = env.Id,
+                LevelName = level.LevelName,
+                LevelId = level.IdLevel,
+            };
+
+            var registryError = _erroService.SaveOrUpdate(errorOcurrence);
+            var retorno = _mapper.Map<ErrorOccurrence>(registryError);
+            return Ok(retorno);
         }
 
         // PUT: api/ErrorOccurence/5

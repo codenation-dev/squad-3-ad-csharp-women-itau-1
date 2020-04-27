@@ -21,9 +21,9 @@ namespace CentralErros.Services
             return _context.Users.Find(userId);
         }
 
-        public IList<User> FindByName(string name)
+        public User FindByName(string name)
         {
-            return _context.Users.Where(x => x.Name == name).ToList();
+            return _context.Users.Where(x => x.Name == name).FirstOrDefault();
         }
 
         public User FindByLogin(string email, string password)
