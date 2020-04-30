@@ -85,24 +85,35 @@ namespace CentralErros.Controllers
                 return BadRequest(ModelState);
 
             // Montando as fk's
-            var user = _userService.FindByName(value.UserName);
-            var level = _levelService.FindByLevelName(value.LevelName);
-            var env = _environmentService.FindByName(value.EnvironmentName);
-            var errorOcurrence = new ErrorOccurrence()
+            var user = _userService.FindById(value.UserId);
+            var level = _levelService.FindByIdLevel(value.LevelId);
+            var env = _environmentService.FindById(value.EnvironmentId);
+            if(user != null && level != null && env != null)
             {
-                Title = value.Title,
-                RegistrationDate = DateTime.Now,
-                Origin = value.Origin,
-                Filed = value.Filed,
-                Details = value.Details,
-                UserId = user.Id,
-                EnvironmentId = env.Id,
-                LevelId = level.IdLevel,
-            };
+                var errorOcurrence = new ErrorOccurrence()
+                {
+                    Title = value.Title,
+                    RegistrationDate = DateTime.Now,
+                    Origin = value.Origin,
+                    Filed = value.Filed,
+                    Details = value.Details,
+                    UserId = user.Id,
+                    IpError = value.IPError,
+                    EnvironmentId = env.Id,
+                    LevelId = level.IdLevel,
+                };
 
-            var registryError = _erroService.SaveOrUpdate(errorOcurrence);
-            var retorno = _mapper.Map<ErrorOccurrence>(registryError);
-            return Ok(retorno);
+                var registryError = _erroService.SaveOrUpdate(errorOcurrence);
+                var retorno = _mapper.Map<ErrorOccurrence>(registryError);
+                return Ok(retorno);
+            }
+            else
+            {
+                // Precisamos colocar tratamento para indicar o que n foi encontrado
+                return NotFound();
+            }
+
+            
         }
 
         // PUT: api/ErrorOccurence/5

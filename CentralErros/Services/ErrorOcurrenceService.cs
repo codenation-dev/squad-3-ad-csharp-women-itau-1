@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CentralErros.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CentralErros.Services
 {
@@ -42,27 +43,14 @@ namespace CentralErros.Services
 
         public ErrorOccurrence SaveOrUpdate(ErrorOccurrence error)
         {
-            var existe = _context.Errors
-                                .Where(x => x.Id == error.Id)
-                                .FirstOrDefault();
-
-            if (existe == null)
-                _context.Errors.Add(error);
-            else
+            if (_context.Environments.Any(e => e.Id == error.EnvironmentId) &&
+                _context.Levels.Any(l => l.IdLevel == error.LevelId) &&
+                _context.Users.Any(u => u.Id == error.UserId))
             {
-                existe.Id = error.Id;
-                existe.Title = error.Title;
-                existe.RegistrationDate = error.RegistrationDate;
-                existe.Origin = error.Origin;
-                existe.Filed = error.Filed;
-                existe.Details = error.Details;
-                existe.UserId = error.UserId;
-                existe.EnvironmentId = error.EnvironmentId;
-                existe.LevelId = error.LevelId;
+                var state = error.Id == 0 ? EntityState.Added : EntityState.Modified;
+                _context.Entry(error).State = state;
+                _context.SaveChanges();
             }
-
-            _context.SaveChanges();
-
             return error;
         }
 

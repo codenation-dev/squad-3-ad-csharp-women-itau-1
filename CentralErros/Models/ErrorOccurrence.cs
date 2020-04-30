@@ -40,7 +40,6 @@ namespace CentralErros.Models
         [Column("USER_ID"), Required]
         public User User { get; set; }
 
-
         [ForeignKey("ENVIRONMENT_ID"), Required]
         public int EnvironmentId { get; set; }
 

@@ -21,12 +21,15 @@ namespace CentralErros.DTO
         public string Details { get; set; }
 
         [Required]
-        public string UserName { get; set; }
+        public string IPError { get; set; }
 
         [Required]
-        public string EnvironmentName { get; set; }
+        public int UserId { get; set; }
 
         [Required]
-        public string LevelName { get; set; }
+        public int EnvironmentId { get; set; }
+
+        [Required]
+        public int LevelId  { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace CentralErros.Models.Configurations
     {
         public void Configure(EntityTypeBuilder<Level> builder)
         {
-            builder.HasKey(x => x.IdLevel);//pri
+            builder.HasKey(x => x.IdLevel);
         }
     }
 }
