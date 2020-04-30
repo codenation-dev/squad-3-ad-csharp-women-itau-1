@@ -50,5 +50,6 @@
     <Compile Remove="DTO\PromocaoDTO.cs" />
     <Compile Remove="DTO\PromocaoProdutoDTO.cs" />
     <Compile Remove="DTO\TokenDTO.cs" />
+    <Compile Remove="Controllers\ErrorDetailsDTO.cs" />
   </ItemGroup>
 </Project>

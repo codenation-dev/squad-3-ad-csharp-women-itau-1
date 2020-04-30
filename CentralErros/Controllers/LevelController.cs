@@ -25,7 +25,7 @@ namespace CentralErros.Controllers
             _levelService = levelService;
             _mapper = mapper;
         }
-        
+
         // GET: api/Level/1
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -39,7 +39,15 @@ namespace CentralErros.Controllers
                 return Ok(retorno);
             }
             else
-                return NotFound();
+            {
+                object res = null;
+                NotFoundObjectResult notfound = new NotFoundObjectResult(res);
+                notfound.StatusCode = 404;
+
+                notfound.Value = "O level informado não foi encontrado!";
+                return NotFound(notfound);
+            }
+               
         }
 
         //POST: api/Level/ error, warning or debug 

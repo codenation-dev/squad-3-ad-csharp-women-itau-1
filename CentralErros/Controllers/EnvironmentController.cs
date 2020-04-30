@@ -82,7 +82,14 @@ namespace CentralErros.Controllers
                 return Ok(retorno);
             }
             else
-                return NotFound();
+            {
+                object res = null;
+                NotFoundObjectResult notfound = new NotFoundObjectResult(res);
+                notfound.StatusCode = 404;
+
+                notfound.Value = "O Environment informado não foi encontrado!";
+                return NotFound(notfound);
+            }
         }
 
 

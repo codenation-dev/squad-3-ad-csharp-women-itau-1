@@ -2,6 +2,7 @@
 using CentralErros.Models;
 using CentralErros.DTO;
 using CentralErros.Services;
+using CentralErros.Controllers;
 
 namespace CentralErros.ConfigStartup
 {

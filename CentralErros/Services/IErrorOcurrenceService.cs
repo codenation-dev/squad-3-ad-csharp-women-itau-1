@@ -5,10 +5,7 @@ namespace CentralErros.Services
 {
     public interface IErrorOcurrenceService
     {
-        ErrorOccurrence FindById(int id);
-        List<ErrorOccurrence> FindErrorsByDetails(string details);
-        List<ErrorOccurrence> FindErrorsByOrigin(string origin);
-        bool FindFiledOcurrence(ErrorOccurrence error);
+        ErrorOccurrence FindById(int id);        
         List<ErrorOccurrence> GetAllErrors();
         ErrorOccurrence SaveOrUpdate(ErrorOccurrence error);
     }

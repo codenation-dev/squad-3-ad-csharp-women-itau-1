@@ -22,20 +22,6 @@ namespace CentralErros.Services
             return _context.Errors.Find(id);
         }
 
-        public List<ErrorOccurrence> FindErrorsByDetails(string details)
-        {
-            return _context.Errors
-                .Where(x => x.Details == details)
-                .ToList();
-        }
-
-        public List<ErrorOccurrence> FindErrorsByOrigin(string origin)
-        {
-            return _context.Errors
-                .Where(x => x.Origin == origin)
-                .ToList();
-        }
-
         public List<ErrorOccurrence> GetAllErrors()
         {
             return _context.Errors.ToList();
@@ -54,9 +40,5 @@ namespace CentralErros.Services
             return error;
         }
 
-        public bool FindFiledOcurrence(ErrorOccurrence error)
-        {
-            return _context.Errors.Any(x => x.Filed == error.Filed);
-        }
     }
 }

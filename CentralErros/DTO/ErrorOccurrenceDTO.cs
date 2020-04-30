@@ -10,13 +10,13 @@ namespace CentralErros.DTO
     {
         [Required]
         public string Title { get; set; }
-        
+
         [Required]
         public bool Filed { get; set; }
 
         [Required]
         public string Details { get; set; }
-        
+
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public int UserId { get; set; }
 
@@ -24,6 +24,29 @@ namespace CentralErros.DTO
         public int EnvironmentId { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public int LevelId  { get; set; }
+        public int LevelId { get; set; }
     }
+
+    public class ErrorDetails
+    {
+        public string Title { get; set; }
+
+        public string Details { get; set; }
+
+        public string Origin { get; set; }
+
+        public DateTime RegistrationDate { get; set; }
+
+        public string UserToken { get; set; }
+
+        public string UserName { get; set; }
+
+        public string LevelName { get; set; }
+
+        public int EventId { get; set; }
+
+
+
+    }
+  
 }

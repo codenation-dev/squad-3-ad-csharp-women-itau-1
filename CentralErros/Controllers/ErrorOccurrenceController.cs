@@ -66,7 +66,7 @@ namespace CentralErros.Controllers
         public ActionResult<ErrorOccurrence> Get(int id)
         {
             var error = _erroService.FindById(id);
-
+       
             if (error != null)
             {
                 var retorno = _mapper.Map<ErrorOccurrence>(error);
@@ -77,6 +77,82 @@ namespace CentralErros.Controllers
             else
                 return NotFound();
         }
+
+        // GET: api/ErrorOccurence/5
+        [HttpGet("getErrorDetails/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<ErrorDetails> GetFiledErrors(int id)
+        {
+            var error = _erroService.FindById(id);
+
+            if (error != null)
+            {
+                var errorDetails = new ErrorDetails
+                {
+                    Details = error.Details,
+                    UserName = error.UserName,
+                    UserToken = error.TokenUser,
+                    EventId = error.IdEvent,
+                    LevelName = error.LevelName,
+                    RegistrationDate = error.RegistrationDate,
+                    Origin = error.Origin,
+                    Title = error.Title,
+
+                };
+                var retorno = _mapper.Map<ErrorDetails>(errorDetails);
+
+                return Ok(retorno);
+            }
+
+            else
+                return NotFound();
+        }
+
+        // GET: api/ErrorOccurence/5
+        [HttpPut("setFiledErrors/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Boolean> SetFiledErrors(int id)
+        {
+            var error = _erroService.FindById(id);
+
+            if (error != null)
+            {
+                error.Filed = true;
+                var retornError = _erroService.SaveOrUpdate(error);
+                var retorno = _mapper.Map<ErrorOccurrenceDTO>(retornError);                
+
+                return Ok(retorno);
+            }
+
+            else
+                return NotFound();
+        }
+
+        // GET: api/ErrorOccurence/5
+        [HttpPut("setUnarchiveErrors/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Boolean> SetUnarchiveErrors(int id)
+        {
+            var error = _erroService.FindById(id);
+
+            if (error != null)
+            {
+                error.Filed = false;
+                var retornError = _erroService.SaveOrUpdate(error);
+                var retorno = _mapper.Map<ErrorOccurrenceDTO>(retornError);
+
+                return Ok(retorno);
+            }
+
+            else
+                return NotFound();
+        }
+
+
+
 
         // POST: api/ErrorOccurence
         [HttpPost]
