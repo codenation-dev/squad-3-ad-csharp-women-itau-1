@@ -19,17 +19,14 @@ namespace CentralErros.DTO
 
         [Required]
         public string Details { get; set; }
-
-        [Required]
-        public string IPError { get; set; }
-
-        [Required]
+        
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public int UserId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public int EnvironmentId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public int LevelId  { get; set; }
     }
 }

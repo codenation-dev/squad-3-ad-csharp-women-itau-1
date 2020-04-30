@@ -8,6 +8,7 @@ using CentralErros.DTO;
 using CentralErros.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace CentralErros.Controllers
 {
@@ -88,7 +89,10 @@ namespace CentralErros.Controllers
             var user = _userService.FindById(value.UserId);
             var level = _levelService.FindByIdLevel(value.LevelId);
             var env = _environmentService.FindById(value.EnvironmentId);
-            if(user != null && level != null && env != null)
+            string host = Dns.GetHostName();
+            string ip = Dns.GetHostAddresses(host)[0].ToString();
+
+            if (user != null && level != null && env != null)
             {
                 var errorOcurrence = new ErrorOccurrence()
                 {
@@ -98,7 +102,7 @@ namespace CentralErros.Controllers
                     Filed = value.Filed,
                     Details = value.Details,
                     UserId = user.Id,
-                    IpError = value.IPError,
+                    IpError = ip,
                     EnvironmentId = env.Id,
                     LevelId = level.IdLevel,
                 };
@@ -114,18 +118,6 @@ namespace CentralErros.Controllers
             }
 
             
-        }
-
-        // PUT: api/ErrorOccurence/5
-        [HttpPut]
-        public ActionResult<ErrorOccurrenceDTO> Put([FromBody] ErrorOccurrenceDTO value)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var error = _mapper.Map<ErrorOccurrence>(value);
-            var retorno = _erroService.SaveOrUpdate(error);
-            return Ok(_mapper.Map<ErrorOccurrenceDTO>(retorno));
         }
 
         // DELETE: api/ApiWithActions/5
