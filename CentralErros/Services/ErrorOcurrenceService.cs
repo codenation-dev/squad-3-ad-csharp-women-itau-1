@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CentralErros.Api.Models;
 using CentralErros.Models;
 
 namespace CentralErros.Services
@@ -58,11 +57,8 @@ namespace CentralErros.Services
                 existe.Filed = error.Filed;
                 existe.Details = error.Details;
                 existe.UserId = error.UserId;
-                existe.TokenUser = error.TokenUser;
                 existe.EnvironmentId = error.EnvironmentId;
-                existe.EnvironmentName = error.EnvironmentName;
                 existe.LevelId = error.LevelId;
-                existe.LevelName = error.LevelName;
             }
 
             _context.SaveChanges();

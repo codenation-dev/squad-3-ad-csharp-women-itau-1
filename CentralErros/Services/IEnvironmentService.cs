@@ -1,4 +1,4 @@
-﻿using CentralErros.Api.Models;
+﻿using CentralErros.Models;
 using System.Collections.Generic;
 
 namespace CentralErros.Services

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using CentralErros.Api.Models;
-using CentralErros.DTO;
 using CentralErros.Models;
+using CentralErros.DTO;
 using CentralErros.Services;
 
 namespace CentralErros.ConfigStartup

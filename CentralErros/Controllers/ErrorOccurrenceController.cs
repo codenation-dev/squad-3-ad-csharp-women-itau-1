@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using CentralErros.Api.Models;
-using CentralErros.DTO;
 using CentralErros.Models;
+using CentralErros.DTO;
 using CentralErros.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -96,11 +95,8 @@ namespace CentralErros.Controllers
                 Origin = value.Origin,
                 Filed = value.Filed,
                 Details = value.Details,
-                TokenUser = user.Token,
                 UserId = user.Id,
-                EnvironmentName = env.Name,
                 EnvironmentId = env.Id,
-                LevelName = level.LevelName,
                 LevelId = level.IdLevel,
             };
 

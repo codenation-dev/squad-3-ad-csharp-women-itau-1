@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CentralErros.Api.Models.Configurations
+namespace CentralErros.Models.Configurations
 {
     public class EnvironmentConfiguration : IEntityTypeConfiguration<Environment>
     {

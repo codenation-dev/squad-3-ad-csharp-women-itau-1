@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using IdentityServer4.Validation;
 using IdentityServer4.Services;
-using CentralErros.Api.Models;
+using CentralErros.Models;
 using CentralErros.Services;
 
 namespace CentralErros.ConfigStartup

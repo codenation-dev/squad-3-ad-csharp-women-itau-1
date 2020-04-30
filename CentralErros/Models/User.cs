@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using CentralErros.Models;
 
-namespace CentralErros.Api.Models
+namespace CentralErros.Models
 {
     [Table("USER")]
     public class User

@@ -1,6 +1,6 @@
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
-using CentralErros.Api.Models;
+using CentralErros.Models;
 using System.Linq;
 using System.Threading.Tasks;
  

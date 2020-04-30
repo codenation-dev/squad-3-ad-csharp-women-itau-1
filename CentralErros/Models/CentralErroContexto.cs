@@ -1,9 +1,8 @@
-﻿using CentralErros.Api.Models.Configurations;
-using CentralErros.Models;
+﻿using CentralErros.Models;
 using CentralErros.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 
-namespace CentralErros.Api.Models
+namespace CentralErros.Models
 {
     public class CentralErroContexto : DbContext
     {
@@ -33,11 +32,12 @@ namespace CentralErros.Api.Models
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.ApplyConfiguration(new EnvironmentConfiguration());
-            modelBuilder.ApplyConfiguration(new LevelConfiguration());
-            modelBuilder.ApplyConfiguration(new ErrorConfiguration());
+        { 
+            modelBuilder.Entity<User>().HasMany(u => u.ErrorOccurrences).WithOne(u => u.User).IsRequired();
+            modelBuilder.Entity<Level>().HasMany(l => l.ErrorOccurrences).WithOne(l => l.Level).IsRequired();
+            modelBuilder.Entity<Environment>().HasMany(e => e.ErrorOccurrences).WithOne(e => e.Environment).IsRequired();
+            modelBuilder.Entity<ErrorOccurrence>().HasKey(e => e.Id);
+
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
 using AutoMapper;
-using CentralErros.Api.Models;
 using CentralErros.ConfigStartup;
 using CentralErros.Filters;
 using CentralErros.Models;

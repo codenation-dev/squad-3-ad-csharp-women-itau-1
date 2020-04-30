@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using IdentityModel.Client;
-using CentralErros.Api.Models;
 using CentralErros.DTO;
 using CentralErros.Models;
 using CentralErros.Services;

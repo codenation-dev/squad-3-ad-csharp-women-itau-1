@@ -18,30 +18,17 @@ namespace CentralErros.Models.Configurations
                    .HasForeignKey(x => x.UserId)
                    .HasConstraintName("FK_Error_User");
 
-            builder.HasOne(x => x.Token)
-                   .WithMany(y => y.ErrorOccurrences)
-                   .HasForeignKey(x => x.TokenUser)
-                   .HasConstraintName("FK_Error_Token");
-
-            builder.HasOne(x => x.Environment_Id)
+            builder.HasOne(x => x.Environment)
                    .WithMany(y => y.ErrorOccurrences)
                    .HasForeignKey(x => x.EnvironmentId)
                    .HasConstraintName("FK_Error_Environment_Id");
 
-            builder.HasOne(x => x.Environment_Name)
-                   .WithMany(y => y.ErrorOccurrences)
-                   .HasForeignKey(x => x.EnvironmentName)
-                   .HasConstraintName("FK_Error_Environment_Name");
 
-            builder.HasOne(x => x.Level_Id)
+            builder.HasOne(x => x.Level)
                    .WithMany(y => y.ErrorOccurrences)
                    .HasForeignKey(x => x.LevelId)
                    .HasConstraintName("FK_Error_Level_Id");
 
-            builder.HasOne(x => x.Level_Name)
-                   .WithMany(y => y.ErrorOccurrences)
-                   .HasForeignKey(x => x.LevelName)
-                   .HasConstraintName("FK_Error_Level_Name");
         }
     }
 

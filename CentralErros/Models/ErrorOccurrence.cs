@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using CentralErros.Api.Models;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace CentralErros.Models
@@ -32,34 +31,27 @@ namespace CentralErros.Models
         [Column("DETAILS"), Required]
         public string Details { get; set; }
 
-        [Column("USER_ID"), Required]
-        public int UserId { get; set; }
-        [ForeignKey("UserId"), Required]
-        public virtual User User { get; set; }
+        [Column("IP_ERROR")]
+        public string IpError { get; set; }
 
-        [Column("TOKEN_USER"), Required]
-        public string TokenUser { get; set; }
-        [ForeignKey("TokenUser"), Required]
-        public virtual User Token { get; set; }
+        [ForeignKey("USER_ID"), Required]
+        public int UserId { get; set; }
+
+        [Column("USER_ID"), Required]
+        public User User { get; set; }
+
+
+        [ForeignKey("ENVIRONMENT_ID"), Required]
+        public int EnvironmentId { get; set; }
 
         [Column("ENVIRONMENT_ID"), Required]
-        public int EnvironmentId { get; set; }
-        [ForeignKey("EnvironmentId"), Required]
-        public virtual Api.Models.Environment Environment_Id { get; set; }
+        public Environment Environment { get; set; }
 
-        [Column("ENVIRONMENT_NAME"), Required]
-        public string EnvironmentName { get; set; }
-        [ForeignKey("EnvironmentName"), Required]
-        public virtual Api.Models.Environment Environment_Name { get; set; }
+        [ForeignKey("LEVEL_ID"), Required]
+        public int LevelId { get; set; }
 
         [Column("LEVEL_ID"), Required]
-        public int LevelId { get; set; }
-        [ForeignKey("LevelId"), Required]
-        public virtual Level Level_Id { get; set; }
+        public Level Level { get; set; }
 
-        [Column("LEVEL_NAME"), Required]
-        public string LevelName { get; set; }
-        [ForeignKey("LevelName"), Required]
-        public virtual Level Level_Name { get; set; }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using IdentityModel.Client;
-using CentralErros.Api.Models;
-using CentralErros.DTO;
 using CentralErros.Models;
+using CentralErros.DTO;
 using CentralErros.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

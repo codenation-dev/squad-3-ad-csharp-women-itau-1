@@ -1,5 +1,4 @@
-﻿using CentralErros.Api.Models;
-using CentralErros.Models;
+﻿using CentralErros.Models;
 using System.Collections.Generic;
 using System.Linq;
 
