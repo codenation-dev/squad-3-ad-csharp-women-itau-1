@@ -31,9 +31,8 @@ namespace CentralErros.Models
         [Column("DETAILS"), Required]
         public string Details { get; set; }
 
-        [Column("IP_ERROR")]
-        public string IpError { get; set; }
-
+        [Column("ID_EVENTS")]
+        public int IdEvent { get; set; }
 
         [ForeignKey("USER_ID"), Required]
         public int UserId { get; set; }
@@ -52,6 +51,15 @@ namespace CentralErros.Models
 
         [Column("LEVEL_ID"), Required]
         public Level Level { get; set; }
+
+        // Informacoes relevantes para mostrar no retorno
+        public string TokenUser { get; set; }
+
+        public string UserName { get; set; }
+
+        public string LevelName { get; set; }
+
+        public string EnvironmentName { get; set; }
 
     }
 }

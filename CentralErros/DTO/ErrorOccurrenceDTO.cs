@@ -10,10 +10,7 @@ namespace CentralErros.DTO
     {
         [Required]
         public string Title { get; set; }
-
-        [Required]
-        public string Origin { get; set; }
-
+        
         [Required]
         public bool Filed { get; set; }
 

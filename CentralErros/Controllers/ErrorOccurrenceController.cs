@@ -91,6 +91,8 @@ namespace CentralErros.Controllers
             var env = _environmentService.FindById(value.EnvironmentId);
             string host = Dns.GetHostName();
             string ip = Dns.GetHostAddresses(host)[0].ToString();
+            Random random = new Random();
+            int randomNumber = random.Next(0, 1000);
 
             if (user != null && level != null && env != null)
             {
@@ -98,13 +100,17 @@ namespace CentralErros.Controllers
                 {
                     Title = value.Title,
                     RegistrationDate = DateTime.Now,
-                    Origin = value.Origin,
+                    Origin = ip,
                     Filed = value.Filed,
                     Details = value.Details,
-                    UserId = user.Id,
-                    IpError = ip,
+                    UserId = user.Id,                    
+                    IdEvent = randomNumber,
                     EnvironmentId = env.Id,
                     LevelId = level.IdLevel,
+                    TokenUser = user.Token,
+                    UserName = user.Name,
+                    LevelName = level.LevelName,
+                    EnvironmentName = env.Name,
                 };
 
                 var registryError = _erroService.SaveOrUpdate(errorOcurrence);
