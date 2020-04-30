@@ -89,7 +89,7 @@ namespace CentralErros.Controllers
 
             var returnUser = _userService.Save(user);
 
-            var retorno = _mapper.Map<UserDTO>(returnUser);
+            var retorno = _mapper.Map<User>(returnUser);
 
             return Ok(retorno);
         }

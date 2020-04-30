@@ -113,12 +113,30 @@ namespace CentralErros.Controllers
             }
             else
             {
-                // Precisamos colocar tratamento para indicar o que n foi encontrado
+                object res = null;
+                NotFoundObjectResult notfound = new NotFoundObjectResult(res);
+                notfound.StatusCode = 404;
+
+                if (user == null)
+                {                    
+                    notfound.Value = "O usuário informado não foi encontrado!";
+                    return NotFound(notfound);
+                }
+                if(level == null)
+                {
+                    notfound.Value = "O Level informado não foi encontrado!";
+                    return NotFound(notfound);
+                }
+                if(env == null)
+                {
+                    notfound.Value = "O Environment informado não foi encontrado!";
+                    return NotFound(notfound);
+                }
                 return NotFound();
             }
 
             
-        }
+            }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]

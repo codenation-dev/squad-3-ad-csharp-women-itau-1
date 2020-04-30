@@ -34,6 +34,7 @@ namespace CentralErros.Models
         [Column("IP_ERROR")]
         public string IpError { get; set; }
 
+
         [ForeignKey("USER_ID"), Required]
         public int UserId { get; set; }
 
