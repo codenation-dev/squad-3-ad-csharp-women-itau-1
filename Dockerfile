@@ -1,18 +1,12 @@
 #NuGet Restore
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build
-WORKDIR /CentralErros
-COPY *.sln .
+
+FROM microsoft/dotnet:2.2-sdk
+WORKDIR /CentalErros
+EXPOSE 80
+
+COPY *.csproj ./
 RUN dotnet restore
-COPY . .
 
-# publish
-FROM build AS publish
-WORKDIR /CentralErros
-RUN dotnet publish -c Release -o /src/publish
 COPY . ./
-
-FROM mcr.microsoft.com/dotnet/core/sdk:22 AS runtime
-WORKDIR /CentralErros
-COPY --from=publish /src/publish .
-
+RUN dotnet publish -c Release -o out
 CMD ASPNETCORE_URLS=http://*:502 dotnet CentralErros.dll
