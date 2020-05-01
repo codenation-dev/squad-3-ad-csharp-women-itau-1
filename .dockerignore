@@ -1,3 +1,8 @@
-*
-!obj/Docker/publish/*
-!obj/Docker/empty/
+**/.dockerignore
+**/.git
+**/.gitignore
+**/.vs
+**/.vscode
+**/*.*proj.user
+**/bin
+**/obj
