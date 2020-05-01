@@ -36,7 +36,7 @@ namespace CentralErros.Services
             else 
             {
                 context.Result = new GrantValidationResult(
-                    TokenRequestErrors.InvalidGrant, "Usuaio ou senha invaidos");
+                    TokenRequestErrors.InvalidGrant, "Usuário ou senha inválidos");
 
                 return Task.FromResult(context.Result);
             }
