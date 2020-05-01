@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using CentralErros.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,12 +8,10 @@ namespace CentralErros.Services
     public class ErrorOcurrenceService : IErrorOcurrenceService
     {
         private CentralErroContexto _context;
-        private object _levelService;
 
-        public ErrorOcurrenceService(CentralErroContexto contexto, ILevelService levelService)
+        public ErrorOcurrenceService(CentralErroContexto contexto)
         {
             _context = contexto;
-            _levelService = levelService;
         }
 
         public ErrorOccurrence FindById(int id)
@@ -54,51 +49,56 @@ namespace CentralErros.Services
             // 2 - Homologação
             // 3 - Desenvolvimento
 
+            // Campo ordenação
+            // 1 - Level
+            // 2 - Frequência
+
             List<ErrorOccurrence> errorsSearchList = new List<ErrorOccurrence>();
             List<ErrorOccurrence> errorsList = new List<ErrorOccurrence>();
 
-            if (textoBuscado != "" && campoBuscado != 0)
+            if (textoBuscado != "" && campoBuscado != 0 && ambiente > 0)
             {
                 if (campoBuscado == 1)
                     errorsList = _context.Errors.Where(x => x.LevelName == textoBuscado).ToList();
                 else if (campoBuscado == 2)
                     errorsList = _context.Errors.Where(x => x.Details == textoBuscado).ToList();
                 else if (campoBuscado == 3)
-                    errorsSearchList = _context.Errors.Where(x => x.Origin == textoBuscado).ToList();
+                    errorsList = _context.Errors.Where(x => x.Origin == textoBuscado).ToList();
 
-                errorsSearchList = errorsSearchList.Where(x => x.EnvironmentId == ambiente || ambiente <= 0).ToList();
+                errorsSearchList = errorsList.Where(x => x.EnvironmentId == ambiente).ToList();
             }
             else
-                errorsSearchList = _context.Errors.Where(x => x.EnvironmentId == ambiente || ambiente <= 0).ToList();
+                errorsSearchList = _context.Errors.Where(x => x.EnvironmentId == ambiente).ToList();
 
-            // Campo ordenação
-            // 1 - Level
-            // 2 - Frequência
+            // So entra na ordenção se houver registros no errorSearchList        
 
-            if (campoOrdenacao == 1)
-                errorsSearchList = errorsSearchList.OrderBy(x => x.LevelId).ToList();
-            else if (campoOrdenacao == 2)
+            if(errorsSearchList.Count() > 0)
             {
-                List<Occurrences> listOcc = new List<Occurrences>();
-
-                foreach (var item in errorsSearchList)
+                if (campoOrdenacao == 1)
+                    errorsSearchList = errorsSearchList.OrderBy(x => x.LevelId).ToList();
+                else if (campoOrdenacao == 2)
                 {
-                    var occ = new Occurrences();
+                    List<Occurrences> listOcc = new List<Occurrences>();
 
-                    occ.ErrorId = item.Id;
-                    occ.Quantity = _context.Errors.Where(x => x.Id == item.Id).Count();
-                    listOcc.Add(occ);
+                    foreach (var item in errorsSearchList)
+                    {
+                        var occ = new Occurrences();
+
+                        occ.ErrorId = item.Id;
+                        occ.Quantity = _context.Errors.Where(x => x.Id == item.Id).Count();
+                        listOcc.Add(occ);
+                    }
+
+                    listOcc = listOcc.OrderByDescending(x => x.Quantity).ToList();
+
+                    foreach (var item in listOcc)
+                    {
+                        errorsList.Add(_context.Errors.Where(x => x.Id == item.ErrorId).FirstOrDefault());
+                    }
+
+                    errorsSearchList = errorsList;
                 }
-
-                listOcc = listOcc.OrderByDescending(x => x.Quantity).ToList();
-
-                foreach (var item in listOcc)
-                {
-                    errorsList.Add(_context.Errors.Where(x => x.Id == item.ErrorId).FirstOrDefault());
-                }
-
-                errorsSearchList = errorsList;
-            }
+            }            
 
             return errorsSearchList;
         }
