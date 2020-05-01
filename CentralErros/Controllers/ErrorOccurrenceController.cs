@@ -44,17 +44,14 @@ namespace CentralErros.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IEnumerable<ErrorOccurrenceDTO>> GetAll()
+        public ActionResult<IEnumerable<ErrorOccurrence>> GetAll()
         {
-            var error = _erroService.GetAllErrors();
-
-            if (error != null)
+            var erros = _erroService.GetAllErrors();
+            if (erros != null)
             {
-                var retorno = _mapper.Map<ErrorOccurrence>(error);
 
-                return Ok(retorno);
+                return Ok(erros.Select(x => _mapper.Map<ErrorOccurrence>(x)).ToList());
             }
-
             else
                 return NotFound();
         }
@@ -79,8 +76,8 @@ namespace CentralErros.Controllers
         }
 
         //GET: api/Errors/1/2/0/0
-        [HttpGet("{idAmbiente}/{idOrdenacao}/{idBusca}/{textoBuscado}")]
-        public ActionResult<List<ErrorOccurrenceDTO>> GetErrorFilter(int idAmbiente, int idOrdenacao, int idBusca, string textoBuscado)
+        [HttpGet("idAmbiente/idOrdenacao/idBusca/textoBuscado")]
+        public ActionResult<List<ErrorOccurrence>> GetErrorFilter(int idAmbiente, int idOrdenacao, int idBusca, string textoBuscado)
         {
             var errors = _erroService.FindByFilters(idAmbiente, idOrdenacao, idBusca, textoBuscado);
 
@@ -95,7 +92,7 @@ namespace CentralErros.Controllers
             }
 
             return Ok(errors.
-                        Select(x => _mapper.Map<ErrorOccurrenceDTO>(x)).
+                        Select(x => _mapper.Map<ErrorOccurrence>(x)).
                         ToList()); ;
         }
 

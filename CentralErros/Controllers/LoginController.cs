@@ -34,7 +34,7 @@ namespace CentralErros.Controllers
             _context = context;
         }
 
-        [HttpGet("{email}, {password}")]
+        [HttpGet("{email}/{password}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<User> Get(string email, string password)

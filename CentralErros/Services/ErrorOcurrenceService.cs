@@ -19,7 +19,7 @@ namespace CentralErros.Services
             return _context.Errors.Find(id);
         }
 
-        public List<ErrorOccurrence> GetAllErrors()
+        public IList<ErrorOccurrence> GetAllErrors()
         {
             return _context.Errors.ToList();
         }
@@ -56,26 +56,35 @@ namespace CentralErros.Services
             List<ErrorOccurrence> errorsSearchList = new List<ErrorOccurrence>();
             List<ErrorOccurrence> errorsList = new List<ErrorOccurrence>();
 
-            if (textoBuscado != "" && campoBuscado != 0 && ambiente > 0)
+            if (textoBuscado != "" && campoBuscado != 0)
             {
                 if (campoBuscado == 1)
                     errorsList = _context.Errors.Where(x => x.LevelName == textoBuscado).ToList();
                 else if (campoBuscado == 2)
-                    errorsList = _context.Errors.Where(x => x.Details == textoBuscado).ToList();
+                    errorsList = _context.Errors.Where(x => x.Details.Contains(textoBuscado)).ToList();
                 else if (campoBuscado == 3)
                     errorsList = _context.Errors.Where(x => x.Origin == textoBuscado).ToList();
 
                 errorsSearchList = errorsList.Where(x => x.EnvironmentId == ambiente).ToList();
             }
-            else
+            else if(ambiente > 0)
+            {
                 errorsSearchList = _context.Errors.Where(x => x.EnvironmentId == ambiente).ToList();
+            }
+            else
+            {
+                errorsSearchList = _context.Errors.ToList();
+            }
+                
 
-            // So entra na ordenção se houver registros no errorSearchList        
+            // Só entra na ordenção se houver registros no errorSearchList        
 
             if(errorsSearchList.Count() > 0)
             {
                 if (campoOrdenacao == 1)
+                {
                     errorsSearchList = errorsSearchList.OrderBy(x => x.LevelId).ToList();
+                }                    
                 else if (campoOrdenacao == 2)
                 {
                     List<Occurrences> listOcc = new List<Occurrences>();
@@ -98,6 +107,12 @@ namespace CentralErros.Services
 
                     errorsSearchList = errorsList;
                 }
+                else
+                {
+                    // se nao informar nenhuma ordenação, ordeno pelo Environment
+                    errorsSearchList = errorsSearchList.OrderBy(x => x.EnvironmentId).ToList();
+                }
+
             }            
 
             return errorsSearchList;
