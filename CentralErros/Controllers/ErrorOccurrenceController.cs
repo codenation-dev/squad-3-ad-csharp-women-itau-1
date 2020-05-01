@@ -79,14 +79,19 @@ namespace CentralErros.Controllers
         }
 
         //GET: api/Errors/1/2/0/0
-        [HttpGet("{ambiente}/{campoOrdenacao}/{campoBuscado}/{textoBuscado}")]
-        public ActionResult<List<ErrorOccurrenceDTO>> GetErrorFilter(int ambiente, int campoOrdenacao, int campoBuscado, string textoBuscado)
+        [HttpGet("{idAmbiente}/{idOrdenacao}/{idBusca}/{textoBuscado}")]
+        public ActionResult<List<ErrorOccurrenceDTO>> GetErrorFilter(int idAmbiente, int idOrdenacao, int idBusca, string textoBuscado)
         {
-            var errors = _erroService.FindByFilters(ambiente, campoOrdenacao, campoBuscado, textoBuscado);
+            var errors = _erroService.FindByFilters(idAmbiente, idOrdenacao, idBusca, textoBuscado);
 
             if (errors == null)
             {
-                return NotFound();
+                object res = null;
+                NotFoundObjectResult notfound = new NotFoundObjectResult(res);
+                notfound.StatusCode = 404;
+
+                notfound.Value = "Não foi encontrada nenhuma ocorrência referente a essa busca!";
+                return NotFound(notfound);
             }
 
             return Ok(errors.
