@@ -46,7 +46,7 @@ namespace CentralErros.Controllers
                 NotFoundObjectResult notfound = new NotFoundObjectResult(res);
                 notfound.StatusCode = 404;
 
-                notfound.Value = "O level informado não foi encontrado!";
+                notfound.Value = "O Level " + id + " não foi encontrado!";
                 return NotFound(notfound);
             }
                
@@ -113,7 +113,7 @@ namespace CentralErros.Controllers
                 NotFoundObjectResult notFound = new NotFoundObjectResult(res);
                 notFound.StatusCode = 404;
 
-                notFound.Value = "O Level informado não foi encontrado!";
+                notFound.Value = "O Level " + id +" não foi encontrado!";
                 return NotFound(notFound);
             }
         }
