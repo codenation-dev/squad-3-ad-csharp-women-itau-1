@@ -24,10 +24,12 @@ namespace CentralErros.ConfigStartup
         {
             var info = new Info()
             {
-                Title = "API - Central de Erros @Codenation em Parceria  com @Itau",
+                Title = "API - Central de Erros @Codenation em Parceria com @Itau",
                 Version = "v1",
-                Description = "Esta API é responsavel pela central de Erros",
-                Contact = new Contact() { Name = "@JaqueLaurenti", Email = "jaquelinelaurenti@mail.com" }
+                Description = "Esta API é responsavel pela Central de Erros",
+                Contact = new Contact() { Name = "Codenation - Itau: Squad 3", Url = "https://github.com/codenation-dev/squad-3-ad-csharp-women-itau-1" }
+                //Contact = new Contact() { Name = "@JaqueLaurenti", Email = "jaquelinelaurenti@mail.com"}
+
             };
 
             if (description.IsDeprecated)

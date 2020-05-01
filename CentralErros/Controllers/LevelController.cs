@@ -19,11 +19,13 @@ namespace CentralErros.Controllers
     {
         private readonly ILevelService _levelService;
         private readonly IMapper _mapper;
+        private readonly CentralErroContexto _context;
 
-        public LevelController(ILevelService levelService, IMapper mapper)
+        public LevelController(ILevelService levelService, IMapper mapper, CentralErroContexto context)
         {
             _levelService = levelService;
             _mapper = mapper;
+            _context = context;
         }
 
         // GET: api/Level/1
@@ -52,6 +54,8 @@ namespace CentralErros.Controllers
 
         //POST: api/Level/ error, warning or debug 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<LevelDTO> Post([FromBody]LevelDTO value)
         {
             if (!ModelState.IsValid)
@@ -73,6 +77,8 @@ namespace CentralErros.Controllers
 
         // GETALL: api/Level/
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<Level>> GetLevels()
         {
             var level = _levelService.FindAllLevels();
@@ -84,6 +90,35 @@ namespace CentralErros.Controllers
             else
                 return NotFound();
         }
+
+        //DELETE: api/Level/ID
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Level> Delete(int id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            Level level = _levelService.FindByIdLevel(id);
+            
+            if(level != null)
+            {
+                _context.Levels.Remove(level);
+                var retorno = _levelService.SaveOrUpdate(level);
+                return Ok(retorno);
+            }
+            else
+            {
+                object res = null;
+                NotFoundObjectResult notFound = new NotFoundObjectResult(res);
+                notFound.StatusCode = 404;
+
+                notFound.Value = "O Level informado não foi encontrado!";
+                return NotFound(notFound);
+            }
+        }
+
+
 
 
     }
