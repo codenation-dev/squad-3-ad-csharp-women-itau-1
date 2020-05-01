@@ -23,10 +23,13 @@ namespace CentralErros.Models
             //if (!optionsBuilder.IsConfigured)
             //optionsBuilder.UseSqlServer("Server=localhost,1433;Database=CentralErros;User Id =sa;Password=jaque@123;Trusted_Connection=False;");
 
+            //if (!optionsBuilder.IsConfigured)
+            //{
+            //    optionsBuilder.UseInMemoryDatabase(databaseName: "CentralErros");
+            //}
+
             if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseInMemoryDatabase(databaseName: "CentralErros");
-            }
+                optionsBuilder.UseSqlServer("Server=localhost;Database=CentralErros ;User= sa; Password= 123; Trusted_Connection=True");
 
             //optionsBuilder.UseSqlite("Data Source=nome-do-arq.db");
         }
