@@ -78,6 +78,22 @@ namespace CentralErros.Controllers
                 return NotFound();
         }
 
+        //GET: api/Errors/1/2/0/0
+        [HttpGet("{ambiente}/{campoOrdenacao}/{campoBuscado}/{textoBuscado}")]
+        public ActionResult<List<ErrorOccurrenceDTO>> GetErrorFilter(int ambiente, int campoOrdenacao, int campoBuscado, string textoBuscado)
+        {
+            var errors = _erroService.FindByFilters(ambiente, campoOrdenacao, campoBuscado, textoBuscado);
+
+            if (errors == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(errors.
+                        Select(x => _mapper.Map<ErrorOccurrenceDTO>(x)).
+                        ToList()); ;
+        }
+
         // GET: api/ErrorOccurence/5
         [HttpGet("getErrorDetails/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

@@ -8,5 +8,8 @@ namespace CentralErros.Services
         ErrorOccurrence FindById(int id);        
         List<ErrorOccurrence> GetAllErrors();
         ErrorOccurrence SaveOrUpdate(ErrorOccurrence error);
+
+        // Find 
+        List<ErrorOccurrence> FindByFilters(int ambiente, int campoOrdenacao, int campoBuscado, string textoBuscado);
     }
 }
