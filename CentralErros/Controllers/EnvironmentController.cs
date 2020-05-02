@@ -46,26 +46,6 @@ namespace CentralErros.Controllers
         }
 
 
-        [HttpPost]
-        public ActionResult<EnvironmentDTO> Post([FromBody]EnvironmentDTO value)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ErrorResponse.FromModelState(ModelState));
-
-
-            var env = new Environment()
-            {
-                Name = value.Name,
-                
-            };
-
-            var returnEnv = _envService.SaveOrUpdate(env);
-
-            var retorno = _mapper.Map<Environment>(returnEnv);
-
-            return Ok(retorno);
-        }
-
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

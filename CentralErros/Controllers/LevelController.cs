@@ -29,29 +29,6 @@ namespace CentralErros.Controllers
         }
 
 
-        //POST: api/Level/ error, warning or debug 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<LevelDTO> Post([FromBody]LevelDTO value)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ErrorResponse.FromModelState(ModelState));
-
-
-            var level = new Level()
-            {
-                LevelName = value.LevelName
-
-            };
-
-            var resLevel = _levelService.SaveOrUpdate(level);
-
-            var retorno = _mapper.Map<Level>(resLevel);
-
-            return Ok(retorno);
-        }
-
         // GETALL: api/Level/
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
