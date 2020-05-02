@@ -43,7 +43,8 @@ namespace CentralErros.ConfigStartup
             }
             else
             {
-                throw new Exception("ambiente de produção precisa de chave real");
+                //throw new Exception("ambiente de produção precisa de chave real");
+                builder.AddDeveloperSigningCredential();
             }
         }
 
