@@ -28,29 +28,6 @@ namespace CentralErros.Controllers
             _context = context;
         }
 
-        // GET: api/Level/1
-        [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Level> Get(int id)
-        {
-            var level = _levelService.FindByIdLevel(id);
-            if (level != null)
-            {
-                var retorno = _mapper.Map<Level>(level);
-                return Ok(retorno);
-            }
-            else
-            {
-                object res = null;
-                NotFoundObjectResult notfound = new NotFoundObjectResult(res);
-                notfound.StatusCode = 404;
-
-                notfound.Value = "O Level " + id + " não foi encontrado!";
-                return NotFound(notfound);
-            }
-               
-        }
 
         //POST: api/Level/ error, warning or debug 
         [HttpPost]
