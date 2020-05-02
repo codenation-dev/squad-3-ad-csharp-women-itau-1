@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+
 
 namespace CentralErros.Tests
 {
@@ -12,6 +14,7 @@ namespace CentralErros.Tests
         public DbContextOptions<CentralErroContexto> FakeOptions { get; }
         private Dictionary<Type, string> DataFileNames { get; } =
             new Dictionary<Type, string>();
+
 
         private string FileName<T>()
         {
@@ -39,7 +42,7 @@ namespace CentralErros.Tests
             FillWith<ErrorOccurrence>();
         }
 
-        private void FillWith<T>()
+        private void FillWith<T>() where T : class
         {
             using (var context = new CentralErroContexto(FakeOptions))
             {
