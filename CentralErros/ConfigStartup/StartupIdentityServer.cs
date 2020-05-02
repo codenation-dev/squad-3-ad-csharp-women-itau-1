@@ -23,7 +23,7 @@ namespace CentralErros.ConfigStartup
             //contexto
             services.AddDbContext<CentralErroContexto>();
 
-            // interface se validação de senha
+            // interface de validação de senha
             services.AddScoped<IResourceOwnerPasswordValidator, ValidadorSenhaService>();
 
             // interface de validação de perfil de usuario
