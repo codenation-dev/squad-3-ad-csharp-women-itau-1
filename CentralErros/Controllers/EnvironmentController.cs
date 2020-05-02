@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace CentralErros.Controllers
 {
@@ -27,29 +29,22 @@ namespace CentralErros.Controllers
             _context = context;
         }
 
-        [HttpGet("{id}")]
+        // GETALL: api/Level/
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Environment> Get(int id)
+        public ActionResult<IEnumerable<Environment>> GetLevels()
         {
-            var env = _envService.FindById(id);
-
+            var env = _envService.FindAll();
             if (env != null)
             {
-                var retorno = _mapper.Map<Environment>(env);
 
-                return Ok(retorno);
+                return Ok(env.Select(x => _mapper.Map<Environment>(x)).ToList());
             }
             else
-            {
-                object res = null;
-                NotFoundObjectResult notfound = new NotFoundObjectResult(res);
-                notfound.StatusCode = 404;
-
-                notfound.Value = "O Environment " + id + " não foi encontrado!";
-                return NotFound(notfound);
-            }
+                return NotFound();
         }
+
 
         [HttpPost]
         public ActionResult<EnvironmentDTO> Post([FromBody]EnvironmentDTO value)
