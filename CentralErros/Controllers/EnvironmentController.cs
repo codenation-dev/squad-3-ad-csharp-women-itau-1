@@ -44,8 +44,7 @@ namespace CentralErros.Controllers
             else
                 return NotFound();
         }
-
-
+        
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

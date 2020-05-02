@@ -53,16 +53,12 @@ namespace CentralErros.Models
         public Level Level { get; set; }
 
         // Informacoes relevantes para mostrar no retorno
-        [Column("TOKEN_USER")]
         public string TokenUser { get; set; }
 
-        [Column("USER_NAME")]
         public string UserName { get; set; }
 
-        [Column("LEVEL_NAME")]
         public string LevelName { get; set; }
 
-        [Column("ENVIRONMENT_NAME")]
         public string EnvironmentName { get; set; }
 
     }
