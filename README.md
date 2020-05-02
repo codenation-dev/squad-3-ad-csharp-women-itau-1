@@ -1,7 +1,7 @@
-# API - Central de Erros @Codenation em Parceria com @Itau
+# API - Central de Erros @Codenation em Parceria com @Itaú
 ## squad-3-ad-csharp-women-itau-1
 
-### Indice
+### Índice
 * [Objetivo](#objetivo)
 * [Tecnologias e Ferramentas Utilizadas](#tecnologias-utilizadas)
 * [Banco de Dados](#banco-de-dados)
@@ -48,7 +48,7 @@ A arquitetura do projeto é formada por:
 
 
 ### Banco de dados
-
+- 
 
 ### Link Heroku
 * [API](https://central-erros-itau.herokuapp.com/swagger/index.html)
