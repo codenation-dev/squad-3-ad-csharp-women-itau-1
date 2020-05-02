@@ -23,7 +23,7 @@ namespace CentralErros.ConfigStartup
             //contexto
             services.AddDbContext<CentralErroContexto>();
 
-            // interface de validação de senha
+            // interface se validação de senha
             services.AddScoped<IResourceOwnerPasswordValidator, ValidadorSenhaService>();
 
             // interface de validação de perfil de usuario
@@ -43,7 +43,8 @@ namespace CentralErros.ConfigStartup
             }
             else
             {
-                throw new Exception("ambiente de produção precisa de chave real");
+                //throw new Exception("ambiente de produção precisa de chave real");
+                builder.AddDeveloperSigningCredential();
             }
         }
 
@@ -55,3 +56,4 @@ namespace CentralErros.ConfigStartup
         }
     }
 }
+

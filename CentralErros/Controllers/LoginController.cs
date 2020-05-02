@@ -53,7 +53,7 @@ namespace CentralErros.Controllers
                 NotFoundObjectResult notfound = new NotFoundObjectResult(res);
                 notfound.StatusCode = 404;
 
-                notfound.Value = "Email ou senha inválidos!";
+                notfound.Value = "Email ou senha inválido!";
                 return NotFound(notfound);
             }
         }

@@ -1,7 +1,6 @@
-﻿using System.IO;
+﻿using System;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 
 namespace CentralErros
 {
@@ -9,20 +8,25 @@ namespace CentralErros
     {
         public static void Main(string[] args)
         {
-            var config = new ConfigurationBuilder().AddCommandLine(args).Build();
-            var host = new WebHostBuilder()
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseConfiguration(config)
-                .UseIISIntegration()
-                .UseStartup<Startup>()
-                .Build();
-
-            host.Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UsePort()            
                 .UseStartup<Startup>();
+    }
+
+    public static class WebHostBuilderExtensions
+    {
+        public static IWebHostBuilder UsePort(this IWebHostBuilder builder)
+        {
+            var port = Environment.GetEnvironmentVariable("PORT");
+            if (string.IsNullOrEmpty(port))
+            {
+                return builder;
+            }
+            return builder.UseUrls($"http://+:{port}");
+        }
     }
 }

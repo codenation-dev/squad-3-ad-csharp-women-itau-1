@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using IdentityServer4.Test;
 using System.Security.Claims;
 using IdentityServer4;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace CentralErros.ConfigStartup
 {
@@ -70,6 +69,6 @@ namespace CentralErros.ConfigStartup
                 },
             };
         }
-
     }
 }
+

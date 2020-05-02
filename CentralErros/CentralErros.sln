@@ -1,7 +1,10 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralErros", "CentralErros.csproj", "{57DECE35-EC27-4E2F-BD7C-21E67B5AB05E}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CentralErros", "CentralErros.csproj", "{57DECE35-EC27-4E2F-BD7C-21E67B5AB05E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralErros.Tests", "..\CentralErros.Tests\CentralErros.Tests.csproj", "{DED02677-CBF7-43FE-AC45-24883637A291}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,5 +16,15 @@ Global
 		{57DECE35-EC27-4E2F-BD7C-21E67B5AB05E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57DECE35-EC27-4E2F-BD7C-21E67B5AB05E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57DECE35-EC27-4E2F-BD7C-21E67B5AB05E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DED02677-CBF7-43FE-AC45-24883637A291}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DED02677-CBF7-43FE-AC45-24883637A291}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DED02677-CBF7-43FE-AC45-24883637A291}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DED02677-CBF7-43FE-AC45-24883637A291}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EB5524FE-5147-4C2E-B4BD-B034A795E814}
 	EndGlobalSection
 EndGlobal
