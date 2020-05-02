@@ -29,7 +29,7 @@ namespace CentralErros.Controllers
             _context = context;
         }
 
-        // GETALL: api/Level/
+        // GETALL: api/environment/
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
