@@ -14,6 +14,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace CentralErros.Controllers
 {
@@ -33,7 +34,7 @@ namespace CentralErros.Controllers
             _mapper = mapper;
             _context = context;
         }
-
+        [EnableCors("AllowSpecificOrigin")]
         [HttpGet("{email}/{password}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

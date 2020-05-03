@@ -3,6 +3,7 @@ using CentralErros.DTO;
 using CentralErros.Models;
 using CentralErros.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -28,8 +29,7 @@ namespace CentralErros.Controllers
             _context = context;
         }
 
-
-        // GETALL: api/Level/
+        [EnableCors("AllowSpecificOrigin")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -45,7 +45,7 @@ namespace CentralErros.Controllers
                 return NotFound();
         }
 
-        //DELETE: api/Level/ID
+        [EnableCors("AllowSpecificOrigin")]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

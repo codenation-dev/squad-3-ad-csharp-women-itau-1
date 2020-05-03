@@ -9,6 +9,7 @@ using CentralErros.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Microsoft.AspNetCore.Cors;
 
 namespace CentralErros.Controllers
 {
@@ -41,6 +42,7 @@ namespace CentralErros.Controllers
         }
 
         // GET: api/ErrorOccurence
+        [EnableCors("AllowSpecificOrigin")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -57,6 +59,7 @@ namespace CentralErros.Controllers
         }
 
         // GET: api/ErrorOccurence/5
+        [EnableCors("AllowSpecificOrigin")]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -76,6 +79,7 @@ namespace CentralErros.Controllers
         }
 
         //GET: api/Errors/1/2/0/0
+        [EnableCors("AllowSpecificOrigin")]
         [HttpGet("idAmbiente/idOrdenacao/idBusca/textoBuscado")]
         public ActionResult<List<ErrorOccurrence>> GetErrorFilter(int idAmbiente, int idOrdenacao, int idBusca, string textoBuscado)
         {
@@ -97,6 +101,7 @@ namespace CentralErros.Controllers
         }
 
         // GET: api/ErrorOccurence/5
+        [EnableCors("AllowSpecificOrigin")]
         [HttpGet("getErrorDetails/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -128,6 +133,7 @@ namespace CentralErros.Controllers
         }
 
         // GET: api/ErrorOccurence/5
+        [EnableCors("AllowSpecificOrigin")]
         [HttpPut("setFiledErrors/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -149,6 +155,7 @@ namespace CentralErros.Controllers
         }
 
         // GET: api/ErrorOccurence/5
+        [EnableCors("AllowSpecificOrigin")]
         [HttpPut("setUnarchiveErrors/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -173,6 +180,7 @@ namespace CentralErros.Controllers
 
 
         // POST: api/ErrorOccurence
+        [EnableCors("AllowSpecificOrigin")]
         [HttpPost]
         public ActionResult<ErrorOccurrenceDTO> Post([FromBody] ErrorOccurrenceDTO value)
         {
@@ -239,6 +247,7 @@ namespace CentralErros.Controllers
             }
 
         // DELETE: api/ApiWithActions/5
+        [EnableCors("AllowSpecificOrigin")]
         [HttpDelete("{id}")]
         public ActionResult<ErrorOccurrenceDTO> Delete(int id)
         {

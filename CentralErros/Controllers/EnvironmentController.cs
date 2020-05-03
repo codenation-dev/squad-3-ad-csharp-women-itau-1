@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Cors;
 
 namespace CentralErros.Controllers
 {
@@ -30,6 +31,7 @@ namespace CentralErros.Controllers
         }
 
         // GETALL: api/environment/
+        [EnableCors("AllowSpecificOrigin")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -44,7 +46,8 @@ namespace CentralErros.Controllers
             else
                 return NotFound();
         }
-        
+
+        [EnableCors("AllowSpecificOrigin")]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

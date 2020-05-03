@@ -14,6 +14,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace CentralErros.Controllers
 {
@@ -33,7 +34,7 @@ namespace CentralErros.Controllers
             _mapper = mapper;
             _context = context;
         }
-
+        [EnableCors("AllowSpecificOrigin")]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -58,7 +59,7 @@ namespace CentralErros.Controllers
             }
         }
 
-     
+        [EnableCors("AllowSpecificOrigin")]
         [HttpPost]
         public ActionResult<UserDTO> Post([FromBody]UserDTO value)
         {
@@ -102,6 +103,7 @@ namespace CentralErros.Controllers
         }
 
         // POST api/cliente
+        [EnableCors("AllowSpecificOrigin")]
         [HttpPut]
         public ActionResult<UserDTO> Put([FromBody] UserDTO value)
         {
@@ -121,7 +123,7 @@ namespace CentralErros.Controllers
 
             return Ok(retorno);
         }
-
+        [EnableCors("AllowSpecificOrigin")]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

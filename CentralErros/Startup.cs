@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -36,7 +37,12 @@ namespace CentralErros
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //add politica para user Ingrid
+            // Adicionando o cors
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
+
             services.AddMvcCore()
                .AddAuthorization(opt =>
                {
@@ -124,6 +130,9 @@ namespace CentralErros
 
             // swagger
             app.UseSwagger();
+
+            // cors
+            app.UseCors(option => option.AllowAnyOrigin()); ;
 
             // swagger UI
             app.UseSwaggerUI(options =>
