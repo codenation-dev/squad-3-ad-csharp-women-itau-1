@@ -1,1 +1,18 @@
-﻿
+﻿[
+    {
+        "Id": 1,
+        "Title": "erro",
+        "RegistrationDate": "2020-05-02T22:24:27.222Z",
+        "Origin": "ip",
+        "Filed": false,
+        "Details": "details",
+        "IdEvent": 1,
+        "UserId": 1,
+        "EnvironmentId": 1,
+        "LevelId": 1,
+        "TokenUser": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImphcXVlbGluZWxhdXJlbnRpQGdtYWlsLmNvbSIsImp0aSI6IjUyMGQxYzRkLThiMTUtNDdlYy04ZTZjLWU0ZTQ2NzNlZWM1MSIsImlzcyI6IkFwcFNldHRpbmdzLkVtaXR0ZXIiLCJhdWQiOiJBcHBTZXR0aW5ncy5WYWxpZE9uIn0.w00xkw8fKUrvcU3fscJUkTPmqz03P2H0xx52s_5mSeA",
+        "UserName": "jaquelinelaurenti@gmail.com",
+        "LevelName": "error",
+        "EnvironmentName": "Dev"
+    }
+]
