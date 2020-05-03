@@ -102,7 +102,7 @@ namespace CentralErros.Services
 
                     foreach (var item in listOcc)
                     {
-                        errorsList.Add(_context.Errors.Where(x => x.Id == item.ErrorId).FirstOrDefault());
+                        errorsList.Add(_context.Errors.Where(x => x.Id == item.ErrorId).Distinct().FirstOrDefault());
                     }
 
                     errorsSearchList = errorsList;
