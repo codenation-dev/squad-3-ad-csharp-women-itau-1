@@ -34,7 +34,7 @@ namespace CentralErros.Controllers
             _mapper = mapper;
             _context = context;
         }
-        [EnableCors("AllowSpecificOrigin")]
+
         [HttpGet("{email}/{password}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

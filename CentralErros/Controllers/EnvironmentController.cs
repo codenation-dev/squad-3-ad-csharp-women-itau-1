@@ -31,7 +31,6 @@ namespace CentralErros.Controllers
         }
 
         // GETALL: api/environment/
-        [EnableCors("AllowSpecificOrigin")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -47,7 +46,6 @@ namespace CentralErros.Controllers
                 return NotFound();
         }
 
-        [EnableCors("AllowSpecificOrigin")]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
