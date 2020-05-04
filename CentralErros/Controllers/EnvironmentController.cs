@@ -34,7 +34,7 @@ namespace CentralErros.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IEnumerable<Environment>> GetLevels()
+        public ActionResult<IEnumerable<Environment>> FindAll()
         {
             var env = _envService.FindAll();
             if (env != null)
