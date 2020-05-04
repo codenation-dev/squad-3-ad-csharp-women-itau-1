@@ -2,6 +2,7 @@
 using System.Linq;
 using CentralErros.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace CentralErros.Services
 {
@@ -67,7 +68,7 @@ namespace CentralErros.Services
 
                 errorsSearchList = errorsList.Where(x => x.EnvironmentId == ambiente).ToList();
             }
-            else if(ambiente > 0)
+            else if (ambiente > 0)
             {
                 errorsSearchList = _context.Errors.Where(x => x.EnvironmentId == ambiente).ToList();
             }
@@ -75,55 +76,100 @@ namespace CentralErros.Services
             {
                 errorsSearchList = _context.Errors.ToList();
             }
-                
 
-            // Só entra na ordenção se houver registros no errorSearchList        
 
-            if(errorsSearchList.Count() > 0)
+            // Só entra na ordenção se houver registros no errorSearchList
+            if (errorsSearchList.Count() > 0)
             {
+
+                // Ordenação por LEVEL
                 if (campoOrdenacao == 1)
                 {
                     errorsSearchList = errorsSearchList.OrderBy(x => x.LevelId).ToList();
-                }                    
+                }
+                // Ordenação por FREQUÊNCIA
                 else if (campoOrdenacao == 2)
                 {
-                    List<Occurrences> listOcc = new List<Occurrences>();
+                    // Se foi preenchido o campo a ser bucado eu verifico a frequencia com base no que foi informado:
+                    // Campo buscado
+                    // 1 - Level
+                    // 2 - Descrição
+                    // 3 - Origem
 
-                    foreach (var item in errorsSearchList)
+                    if (campoBuscado > 0)
                     {
-                        var occ = new Occurrences();
+                        if (campoBuscado == 1)
+                        {
+                            var ordenacao = errorsList.GroupBy(x => x.LevelId)
+                                        .Select(group => new
+                                        {
+                                            Level = group.Key,
+                                            Quantidade = group.Count()
+                                        })
+                                        .OrderByDescending(x => x.Quantidade)
+                                        .ToList();
 
-                        occ.ErrorId = item.Id;
-                        occ.Quantity = _context.Errors.Where(x => x.Id == item.Id).Count();
-                        listOcc.Add(occ);
+                            // aplicar ordenação definida na lista desejada                                    
+                            return errorsList.OrderBy(x => ordenacao.Select(y => y.Level).IndexOf(x.LevelId)).ToList();
+                        }
+
+                        if (campoBuscado == 2)
+                        {
+                            var ordenacao = errorsList.GroupBy(x => x.Details)
+                                        .Select(group => new
+                                        {
+                                            Details = group.Key,
+                                            Quantidade = group.Count()
+                                        })
+                                        .OrderByDescending(x => x.Quantidade)
+                                        .ToList();
+
+                            // aplicar ordenação definida na lista desejada                                    
+                            return errorsList.OrderBy(x => ordenacao.Select(y => y.Details).IndexOf(x.Details)).ToList();
+                        }
+
+                        if (campoBuscado == 3)
+                        {
+                            var ordenacao = errorsList.GroupBy(x => x.Origin)
+                                        .Select(group => new
+                                        {
+                                            Origin = group.Key,
+                                            Quantidade = group.Count()
+                                        })
+                                        .OrderByDescending(x => x.Quantidade)
+                                        .ToList();
+
+                            // aplicar ordenação definida na lista desejada                                    
+                            return errorsList.OrderBy(x => ordenacao.Select(y => y.Origin).IndexOf(x.Origin)).ToList();
+                        }
+                    }
+                    // se não foi informado nenhum campo a ser buscado eu orderno a frequencia pelo Environment
+                    else
+                    {
+                        var ordenacao = errorsList.GroupBy(x => x.EnvironmentId)
+                                        .Select(group => new
+                                        {
+                                            Environment = group.Key,
+                                            Quantidade = group.Count()
+                                        })
+                                        .OrderByDescending(x => x.Quantidade)
+                                        .ToList();
+
+                        // aplicar ordenação definida na lista desejada                                    
+                        return errorsList.OrderBy(x => ordenacao.Select(y => y.Environment).IndexOf(x.EnvironmentId)).ToList();
                     }
 
-                    listOcc = listOcc.OrderByDescending(x => x.Quantity).ToList();
 
-                    foreach (var item in listOcc)
-                    {
-                        errorsList.Add(_context.Errors.Where(x => x.Id == item.ErrorId).Distinct().FirstOrDefault());
-                    }
-
-                    errorsSearchList = errorsList;
                 }
+                // Caso não for informado nenhuma ordenação eu ordeno pelo Environment
                 else
                 {
-                    // se nao informar nenhuma ordenação, ordeno pelo Environment
                     errorsSearchList = errorsSearchList.OrderBy(x => x.EnvironmentId).ToList();
                 }
 
-            }            
+            }
 
             return errorsSearchList;
         }
-
-        // Classe criada para controlar a quantidade de erros que está sendo apresentado
-        public class Occurrences
-        {
-            public int ErrorId { get; set; }
-            public int Quantity { get; set; }
-        }
-
     }
 }
