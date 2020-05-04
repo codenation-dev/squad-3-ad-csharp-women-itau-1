@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Linq;
+using SendGrid;
 
 namespace CentralErros.Models
 {
-    public class ErrorResponse
+    public class ErrorResponse 
     {
         public int Codigo { get; set; }
         public string Mensagem { get; set; }
@@ -43,6 +44,15 @@ namespace CentralErros.Models
             {
                 Codigo = 401,
                 Mensagem = tokenResponse.ErrorDescription
+            };
+        }
+
+        internal static ErrorResponse FromEmail(SendGrid.Response response)
+        {
+            return new ErrorResponse
+            {
+                Codigo = 600,
+                Mensagem = $"Não foi possível enviar email, {response.StatusCode}"
             };
         }
     }

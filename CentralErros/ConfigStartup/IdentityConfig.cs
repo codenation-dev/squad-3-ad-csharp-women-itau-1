@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using IdentityServer4.Test;
 using System.Security.Claims;
 using IdentityServer4;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using CentralErros.Models;
 
 namespace CentralErros.ConfigStartup
 {
     public static class IdentityConfig
     {
-        // Recursos : OpenId
+         // Recursos : OpenId
         public static IEnumerable<IdentityResource> GetRecursosIdentity()
         {
             return new IdentityResource[]

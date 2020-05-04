@@ -115,7 +115,16 @@ namespace CentralErros
             {
                 opt.SuppressModelStateInvalidFilter = true;
             });
+
+            //services.AddIdentity(Configuration);
+
+            services.AddTransient<IEmailService, EmailService>();
+
+            // add config sendGrid
+            services.Configure<SendGridOptions>(Configuration.GetSection("SendGridOptions"));
         }
+
+            
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider)
