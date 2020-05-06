@@ -36,13 +36,6 @@ namespace CentralErros.Controllers
             _emailServices = emailServices;
         }
 
-        // método de teste de autorização
-        [HttpGet]
-        public async Task<ActionResult> Get()
-        {
-            return Ok("Teste autorização Ok!!!");
-        }
-
         [HttpPost("registerUser")]
         [AllowAnonymous]
         public async Task<ActionResult> Cadastrar(RegisterUserDTO registerUser)
@@ -52,7 +45,7 @@ namespace CentralErros.Controllers
 
             var user = new IdentityUser
             {
-                UserName = registerUser.Email,
+                UserName = registerUser.Nome,
                 Email = registerUser.Email,
                 EmailConfirmed = true
             };

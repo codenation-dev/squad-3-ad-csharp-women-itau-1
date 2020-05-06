@@ -117,6 +117,7 @@ namespace CentralErros.Controllers
                     RegistrationDate = error.RegistrationDate,
                     Origin = error.Origin,
                     Title = error.Title,
+                    Username = error.Username,
 
                 };
                 var retorno = _mapper.Map<ErrorDetails>(errorDetails);
@@ -190,12 +191,13 @@ namespace CentralErros.Controllers
                 {
                     Title = value.Title,
                     RegistrationDate = DateTime.Now,
-                    Origin = value.Origin.IsNullOrEmpty() ? host : value.Origin,
+                    Origin = host,
                     Filed = false,
                     Details = value.Details,                                      
                     IdEvent = randomNumber,
                     EnvironmentId = env.Id,
-                    LevelId = level.IdLevel,       
+                    LevelId = level.IdLevel,    
+                    Username = value.Username,
                 };
 
                 var registryError = _erroService.SaveOrUpdate(errorOcurrence);

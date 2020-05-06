@@ -34,7 +34,7 @@ namespace CentralErros.Services
                 };
 
                 // email do usuario
-                msg.AddTo(new EmailAddress("ingrid139@gmail.com", email));
+                msg.AddTo(new EmailAddress("apideuerro@gmail.com", email));
 
                 // envio do email
                 var responseSend = await client.SendEmailAsync(msg);

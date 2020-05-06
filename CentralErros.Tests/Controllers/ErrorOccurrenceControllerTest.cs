@@ -28,7 +28,7 @@ namespace CentralErros.Tests.Controllers
             var contexto = new CentralErroContexto(fakes.FakeOptions);
 
             var controller = new ErrorOccurrenceController(fakes.Mapper, contexto,
-                fakeErrorOccurrenceService, fakeUserService, fakeLevelService,
+                fakeErrorOccurrenceService,  fakeLevelService,
                 fakeEnvironmentService);
             var result = controller.Get(id);
 

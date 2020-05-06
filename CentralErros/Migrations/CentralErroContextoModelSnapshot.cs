@@ -62,6 +62,10 @@ namespace CentralErros.Migrations
                         .IsRequired()
                         .HasColumnName("ORIGIN");
 
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnName("USERNAME");
+
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnName("REGISTRATION_DATE");
 

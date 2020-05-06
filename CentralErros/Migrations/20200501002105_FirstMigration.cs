@@ -44,6 +44,7 @@ namespace CentralErros.Migrations
                     TITLE = table.Column<string>(nullable: false),
                     REGISTRATION_DATE = table.Column<DateTime>(nullable: false),
                     ORIGIN = table.Column<string>(nullable: false),
+                    USERNAME = table.Column<string>(nullable: false),
                     FILED = table.Column<bool>(nullable: false),
                     DETAILS = table.Column<string>(nullable: false),
                     ID_EVENTS = table.Column<int>(nullable: false),                    

@@ -30,7 +30,7 @@ namespace CentralErros.Tests.Controllers
             var controller = new EnvironmentController(fakeEnvironmentService, 
                 fakes.Mapper, contexto);
 
-            var result = controller.Get(id);
+            var result = controller.FindAll();
 
             Assert.IsType<OkObjectResult>(result.Result);
             var actual = (result.Result as OkObjectResult).Value as CentralErros.Models.Environment;

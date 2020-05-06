@@ -40,14 +40,11 @@ namespace CentralErros.Tests.Services
             fakeError.Origin = "ip";
             fakeError.Filed = false;
             fakeError.Details = "details";
-            fakeError.IdEvent = 2;
-            fakeError.UserId = 2;
+            fakeError.IdEvent = 2;            
             fakeError.EnvironmentId = 2;
             fakeError.LevelId = 2;
-            fakeError.TokenUser = "token";
-            fakeError.UserName = "user";
-            fakeError.LevelName = "level";
-            fakeError.EnvironmentName = "environment";
+            fakeError.Username = "jaque";
+            
 
             using (var context = new CentralErroContexto(fakeContext.FakeOptions))
             {

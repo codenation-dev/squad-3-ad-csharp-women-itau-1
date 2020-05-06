@@ -31,6 +31,9 @@ namespace CentralErros.Models
         [Column("DETAILS"), Required]
         public string Details { get; set; }
 
+        [Column("USERNAME"), Required]
+        public string Username { get; set; }
+
         [Column("ID_EVENTS")]
         public int IdEvent { get; set; }
 
