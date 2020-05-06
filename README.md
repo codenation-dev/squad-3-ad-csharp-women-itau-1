@@ -5,8 +5,10 @@
 * [Objetivo](#objetivo)
 * [Tecnologias e Ferramentas Utilizadas](#tecnologias-utilizadas)
 * [Banco de Dados](#banco-de-dados)
-* [Heroku](#link-heroku)
+* [Deploy da Aplicação](#deploy-da-aplicação)
 * [Apresentação](#slides)
+* [Rotas](#rotas)
+* [FrontEnd](#front-end)
 * [Agradecimentos](#agradecimentos)
 
 ### Trabalho desenvolvido pela Squad:
@@ -39,10 +41,10 @@ A arquitetura do projeto é formada por:
 - C# .NET
 - Entity Framework
 - Clean Code 
+- Swagger
 
 ### Ferramentas Utilizadas 
 - Visual Studio
-- Swagger
 - Trello
 - WhatsApp
 - Azure 
@@ -59,6 +61,10 @@ O deploy da aplicação foi feito através do Heroku, utilizando o Docker Image.
 ### Slides
 Slides utilizados na apresentação
 * [Slides]
+
+### Rotas
+
+### Front-End
 
 ### Agradecimentos
 
