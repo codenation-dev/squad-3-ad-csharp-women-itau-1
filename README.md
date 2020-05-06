@@ -37,20 +37,23 @@ A arquitetura do projeto é formada por:
 
 ### Tecnologias Utilizadas
 - C# .NET
-- 
-- 
+- Entity Framework
+- Clean Code 
 
 ### Ferramentas Utilizadas 
 - Visual Studio
 - Swagger
 - Trello
 - WhatsApp
-
+- Azure 
+- Heroku
+- Docker
 
 ### Banco de dados
-- 
+- SQLServer criado através do Azure
 
-### Link Heroku
+### Deploy da Aplicação
+O deploy da aplicação foi feito através do Heroku, utilizando o Docker Image.
 * [API](https://central-erros-itau.herokuapp.com/swagger/index.html)
 
 ### Slides
