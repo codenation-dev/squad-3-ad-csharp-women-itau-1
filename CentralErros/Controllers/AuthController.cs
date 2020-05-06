@@ -105,11 +105,12 @@ namespace CentralErros.Controllers
             }
             else
             {
-                var forgotMail = await ForgotMainPassword(user);
-                if (forgotMail.Enviado)
-                    return Ok();
-
-                return Unauthorized(forgotMail.error);
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var resetPassword = new ResetPasswordDTO();
+                resetPassword.Code = code;
+                resetPassword.Email = user.Email;
+                resetPassword.UserId = user.Id;
+                return Ok(resetPassword);  
             }
         }
 
