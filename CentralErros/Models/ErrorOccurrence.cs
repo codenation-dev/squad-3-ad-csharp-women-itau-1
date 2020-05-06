@@ -46,11 +46,5 @@ namespace CentralErros.Models
         [Column("LEVEL_ID"), Required]
         public Level Level { get; set; }
 
-        // Informacoes relevantes para mostrar no retorno
-
-        public string LevelName { get; set; }
-
-        public string EnvironmentName { get; set; }
-
     }
 }

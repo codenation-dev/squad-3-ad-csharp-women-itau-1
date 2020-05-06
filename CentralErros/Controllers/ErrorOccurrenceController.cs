@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Authorization;
+using IdentityServer4.Extensions;
 
 namespace CentralErros.Controllers
 {
@@ -189,7 +190,7 @@ namespace CentralErros.Controllers
                 {
                     Title = value.Title,
                     RegistrationDate = DateTime.Now,
-                    Origin = value.Origin,
+                    Origin = value.Origin.IsNullOrEmpty() ? host : value.Origin,
                     Filed = false,
                     Details = value.Details,                                      
                     IdEvent = randomNumber,

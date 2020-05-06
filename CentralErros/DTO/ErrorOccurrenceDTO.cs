@@ -8,11 +8,10 @@ namespace CentralErros.DTO
 {
     public class ErrorOccurrenceDTO
     {
-        [Required]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Title { get; set; }
 
-
-        [Required]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Details { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
@@ -20,7 +19,8 @@ namespace CentralErros.DTO
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public int LevelId { get; set; }
-        public string Origin { get; internal set; }
+        
+        public string Origin { get; set; }
     }
 
     public class ErrorDetails

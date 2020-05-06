@@ -59,7 +59,7 @@ namespace CentralErros.Services
             if (textoBuscado != "" && campoBuscado != 0)
             {
                 if (campoBuscado == 1)
-                    errorsList = _context.Errors.Where(x => x.LevelName == textoBuscado).ToList();
+                    errorsList = _context.Errors.Where(x => x.Level.LevelName == textoBuscado).ToList();
                 else if (campoBuscado == 2)
                     errorsList = _context.Errors.Where(x => x.Details.Contains(textoBuscado)).ToList();
                 else if (campoBuscado == 3)
