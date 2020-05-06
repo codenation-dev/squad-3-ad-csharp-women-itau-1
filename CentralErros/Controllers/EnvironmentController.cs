@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CentralErros.Controllers
 {
@@ -17,6 +18,7 @@ namespace CentralErros.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
+    [Authorize]
     public class EnvironmentController : ControllerBase
     {
         private readonly IEnvironmentService _envService;

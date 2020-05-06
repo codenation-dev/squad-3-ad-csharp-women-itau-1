@@ -34,12 +34,6 @@ namespace CentralErros.Models
         [Column("ID_EVENTS")]
         public int IdEvent { get; set; }
 
-        [ForeignKey("USER_ID"), Required]
-        public int UserId { get; set; }
-
-        [Column("USER_ID"), Required]
-        public User User { get; set; }
-
         [ForeignKey("ENVIRONMENT_ID"), Required]
         public int EnvironmentId { get; set; }
 
@@ -53,9 +47,6 @@ namespace CentralErros.Models
         public Level Level { get; set; }
 
         // Informacoes relevantes para mostrar no retorno
-        public string TokenUser { get; set; }
-
-        public string UserName { get; set; }
 
         public string LevelName { get; set; }
 

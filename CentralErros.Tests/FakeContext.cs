@@ -31,9 +31,6 @@ namespace CentralErros.Tests
             FakeOptions = new DbContextOptionsBuilder<CentralErroContexto>()
                 .UseInMemoryDatabase(databaseName: $"CentralErrors_{testName}")
                 .Options;
-
-            DataFileNames.Add(typeof(User), $"FakeData{Path.DirectorySeparatorChar}user.json");
-            DataFileNames.Add(typeof(UserDTO), $"FakeData{Path.DirectorySeparatorChar}user.json");
             DataFileNames.Add(typeof(CentralErros.Models.Environment), $"FakeData{Path.DirectorySeparatorChar}environment.json");
             DataFileNames.Add(typeof(EnvironmentDTO), $"FakeData{Path.DirectorySeparatorChar}environment.json");
             DataFileNames.Add(typeof(Level), $"FakeData{Path.DirectorySeparatorChar}level.json");
@@ -46,7 +43,7 @@ namespace CentralErros.Tests
                 cfg.CreateMap<CentralErros.Models.Environment, EnvironmentDTO>().ReverseMap();
                 cfg.CreateMap<ErrorOccurrence, ErrorOccurrenceDTO>().ReverseMap();
                 cfg.CreateMap<Level, LevelDTO>().ReverseMap();
-                cfg.CreateMap<User, UserDTO>().ReverseMap();
+                
             });
 
             this.Mapper = configuration.CreateMapper();
@@ -54,7 +51,6 @@ namespace CentralErros.Tests
 
         public void FillWithAll()
         {
-            FillWith<User>();
             FillWith<CentralErros.Models.Environment>();
             FillWith<Level>();
             FillWith<ErrorOccurrence>();
@@ -130,29 +126,6 @@ namespace CentralErros.Tests
                     if (env.Id == 0)
                         env.Id = 999;
                     return env;
-                });
-
-            return service;
-        }
-
-        public Mock<IUserService> FakeUserService()
-        {
-            var service = new Mock<IUserService>();
-
-            service.Setup(x => x.FindById(It.IsAny<int>()))
-                .Returns((int id) => GetFakeData<User>()
-                .FirstOrDefault(x => x.Id == id));
-
-            service.Setup(x => x.FindByLogin(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns((string email, string password) => GetFakeData<User>()
-                .FirstOrDefault(x => x.Email == email && x.Password == password));
-
-            service.Setup(x => x.Save(It.IsAny<User>()))
-                .Returns((User user) =>
-                {
-                    if (user.Id == 0)
-                        user.Id = 999;
-                    return user;
                 });
 
             return service;

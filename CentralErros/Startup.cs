@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Security.Claims;
 using AutoMapper;
 using CentralErros.ConfigStartup;
 using CentralErros.Filters;
@@ -10,51 +9,33 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace CentralErros
 {
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        public StartupIdentityServer IdentitServerStartup { get; }
-        public Startup(IConfiguration configuration, IHostingEnvironment environment)
+
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-            //config ambiente se não for teste
-            if (!environment.IsEnvironment("Testing"))
-                IdentitServerStartup = new StartupIdentityServer(environment);
         }
 
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Adicionando o cors
-            services.AddCors(c =>
-            {
-                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
-            });
-
             services.AddMvcCore()
-               .AddAuthorization(opt =>
-               {
-                   opt.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Email, "jaquelinelaurenti@gmail.com"));
-               })
-               .AddJsonFormatters()
-               .AddApiExplorer()
-               .AddVersionedApiExplorer(p =>
-               {
-                   p.GroupNameFormat = "'v'VVV";
-                   p.SubstituteApiVersionInUrl = true;
-               });
+                    .AddJsonFormatters()
+                    .AddApiExplorer()
+                    .AddVersionedApiExplorer(p =>
+                    {
+                        p.GroupNameFormat = "'v'VVV";
+                        p.SubstituteApiVersionInUrl = true;
+                    });
 
             services.AddMvc(opt =>
             {
@@ -62,15 +43,14 @@ namespace CentralErros
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDbContext<CentralErroContexto>();
-            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEnvironmentService, EnvironmentService>();
             services.AddScoped<ILevelService, LevelService>();
             services.AddScoped<IErrorOcurrenceService, ErrorOcurrenceService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            // config prop IdentitServerStartup
-            if (IdentitServerStartup != null)
-                IdentitServerStartup.ConfigureServices(services);
+
+            // config Identity por um método de extensão de IServiceCollection
+            services.AddIdentityConfiguration(Configuration);
 
             // config versionamento
             services.AddApiVersioning(p =>
@@ -80,51 +60,37 @@ namespace CentralErros
                 p.AssumeDefaultVersionWhenUnspecified = true;
             });
 
+            // config desab validação de Model Sate automatica
+            services.Configure<ApiBehaviorOptions>(opt =>
+            {
+                opt.SuppressModelStateInvalidFilter = true;
+            });
+
+
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
-            // config swagger para gerar arquivo de documentação swagger.json
             services.AddSwaggerGen(c =>
             {
                 c.AddSecurityRequirement(
                     new Dictionary<string, IEnumerable<string>> {
-                            { "Bearer", new string[] { } }
-                });
+                    { "Bearer", new string[] { } }
+                    });
 
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
                     Name = "Authorization",
                     In = "header",
                     Type = "apiKey",
-                    Description = "Insira o token JWT desta maneira: Bearer {seu token}"
+                    Description = "Insira o token JWT dessa maneira: Bearer {seu token}"
                 });
-
             });
 
 
-            // config autenticação para API - jwt bearer 
-            services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
-                {
-                    options.Authority = "http://localhost:5001";
-                    options.RequireHttpsMetadata = false;
-                    options.Audience = "codenation";
-                });
-
-            // config desab validação de Model State automatico
-            services.Configure<ApiBehaviorOptions>(opt =>
-            {
-                opt.SuppressModelStateInvalidFilter = true;
-            });
-
-            //services.AddIdentity(Configuration);
-
-            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IEmailServices, EmailServices>();
 
             // add config sendGrid
             services.Configure<SendGridOptions>(Configuration.GetSection("SendGridOptions"));
         }
-
-            
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider)
@@ -134,27 +100,16 @@ namespace CentralErros
                 app.UseDeveloperExceptionPage();
             }
 
-            if (IdentitServerStartup != null)
-                IdentitServerStartup.Configure(app, env);
-
-            // swagger
             app.UseSwagger();
 
-            // cors
-            app.UseCors(option => option.AllowAnyOrigin()); ;
-
-            // swagger UI
-            app.UseSwaggerUI(options =>
+            app.UseSwaggerUI(opt =>
             {
-                //s.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
                 foreach (var description in provider.ApiVersionDescriptions)
                 {
-                    options.SwaggerEndpoint(
-                    $"/swagger/{description.GroupName}/swagger.json",
-                    description.GroupName.ToUpperInvariant());
+                    opt.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
+                        description.GroupName.ToUpperInvariant());
                 }
-
-                options.DocExpansion(DocExpansion.List);
+                opt.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.List);
             });
 
             app.UseAuthentication();

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CentralErros.Controllers
 {
@@ -17,6 +18,7 @@ namespace CentralErros.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
+    [Authorize]
     public class ErrorOccurrenceController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -24,18 +26,17 @@ namespace CentralErros.Controllers
         private readonly IErrorOcurrenceService _erroService;
         private readonly ILevelService _levelService;
         private readonly IEnvironmentService _environmentService;
-        private readonly IUserService _userService;
+        
 
         public ErrorOccurrenceController(IMapper mapper, CentralErroContexto contexto,
            IErrorOcurrenceService erroService,
-           IUserService userService,
+           
            ILevelService levelService,
            IEnvironmentService environmentService)
         {
             _mapper = mapper;
             _contexto = contexto;
-            _erroService = erroService;
-            _userService = userService;
+            _erroService = erroService;            
             _levelService = levelService;
             _environmentService = environmentService;
 
@@ -110,10 +111,8 @@ namespace CentralErros.Controllers
                 var errorDetails = new ErrorDetails
                 {
                     Details = error.Details,
-                    UserName = error.UserName,
-                    UserToken = error.TokenUser,
                     EventId = error.IdEvent,
-                    LevelName = error.LevelName,
+                    LevelName = error.Level.LevelName,
                     RegistrationDate = error.RegistrationDate,
                     Origin = error.Origin,
                     Title = error.Title,
@@ -178,31 +177,24 @@ namespace CentralErros.Controllers
                 return BadRequest(ModelState);
 
             // Montando as fk's
-            var user = _userService.FindById(value.UserId);
             var level = _levelService.FindByIdLevel(value.LevelId);
             var env = _environmentService.FindById(value.EnvironmentId);
             string host = Dns.GetHostName();
-            string ip = Dns.GetHostAddresses(host)[0].ToString();
             Random random = new Random();
             int randomNumber = random.Next(0, 1000);
 
-            if (user != null && level != null && env != null)
+            if (level != null && env != null)
             {
                 var errorOcurrence = new ErrorOccurrence()
                 {
                     Title = value.Title,
                     RegistrationDate = DateTime.Now,
-                    Origin = ip,
+                    Origin = value.Origin,
                     Filed = false,
-                    Details = value.Details,
-                    UserId = user.Id,                    
+                    Details = value.Details,                                      
                     IdEvent = randomNumber,
                     EnvironmentId = env.Id,
-                    LevelId = level.IdLevel,
-                    TokenUser = user.Token,
-                    UserName = user.Name,
-                    LevelName = level.LevelName,
-                    EnvironmentName = env.Name,
+                    LevelId = level.IdLevel,       
                 };
 
                 var registryError = _erroService.SaveOrUpdate(errorOcurrence);
@@ -215,11 +207,6 @@ namespace CentralErros.Controllers
                 NotFoundObjectResult notfound = new NotFoundObjectResult(res);
                 notfound.StatusCode = 404;
 
-                if (user == null)
-                {                    
-                    notfound.Value = "O usuário informado não foi encontrado!";
-                    return NotFound(notfound);
-                }
                 if(level == null)
                 {
                     notfound.Value = "O Level informado não foi encontrado!";

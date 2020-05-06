@@ -15,7 +15,7 @@ namespace CentralErros.Controllers
     [ApiController]
     [ApiVersion("1.0")] 
     [Route("api/v{version:apiVersion}/[controller]")]
-    //[Authorize]
+    [Authorize]
     public class LevelController : ControllerBase
     {
         private readonly ILevelService _levelService;

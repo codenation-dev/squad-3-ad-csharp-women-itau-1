@@ -1,78 +1,62 @@
-using IdentityServer4.Models;
-using System.Collections.Generic;
-using IdentityServer4.Test;
-using System.Security.Claims;
-using IdentityServer4;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
+using CentralErros.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using CentralErros.Models;
 
 namespace CentralErros.ConfigStartup
 {
     public static class IdentityConfig
     {
-         // Recursos : OpenId
-        public static IEnumerable<IdentityResource> GetRecursosIdentity()
+        public static IServiceCollection AddIdentityConfiguration(this IServiceCollection services,
+            IConfiguration configuration)
         {
-            return new IdentityResource[]
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            // JWT
+            // acesso � se��o do arq appsetiings
+            var appSettingsSection = configuration.GetSection("AppSettings");
+            
+            // config com parametros
+            services.Configure<AppSettings>(appSettingsSection);
+
+            // cast para objeto
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            
+            // chave gerada a partir do parametro
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+            // config autentica��o e Bearer
+            services.AddAuthentication(x =>
             {
-                new IdentityResources.OpenId()              
-            };
-        }
-
-        // config recursos api
-        public static IEnumerable<ApiResource> GetApis()
-        {
-            return new List<ApiResource>() { 
-                new ApiResource(
-                    name: "codenation", 
-                    displayName: "Codenation Class", 
-                    claimTypes: new [] { 
-                        ClaimTypes.Role, 
-                        ClaimTypes.Email 
-                    }
-                )
-            };            
-        }
-
-        // config client 
-        public static IEnumerable<Client> GetClients()
-        {
-            return new List<Client>() { 
-                new Client
-                {
-                    ClientName = "Client App 1",
-                    ClientId = "codenation.api_client",
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                    ClientSecrets = {
-                        new Secret("codenation.api_secret".Sha256())
-                    },
-                    AllowedScopes = {  
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        "codenation"
-                    },
-                    AlwaysIncludeUserClaimsInIdToken = true
-                }
-            };
-        }
-
-        public static List<TestUser> GetUsers()
-        {            
-            return new List<TestUser>
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
             {
-                new TestUser
+                x.RequireHttpsMetadata = true;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    SubjectId = "1",
-                    Username = "jaque",
-                    Password = "123456",
-                    Claims = new [] { 
-                        new Claim(ClaimTypes.Role, "admin"), 
-                        new Claim(ClaimTypes.Email, "jaque@mail.com")
-                    }
-                },
-            };
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidAudience = appSettings.ValidoEm,
+                    ValidIssuer = appSettings.Emissor
+                };
+            });
+
+            return services;
         }
     }
 }
-

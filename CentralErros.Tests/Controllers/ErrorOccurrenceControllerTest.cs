@@ -20,7 +20,6 @@ namespace CentralErros.Tests.Controllers
             var fakes = new FakeContext("ErrorOccurrenceControllerTest");
 
             var fakeErrorOccurrenceService = fakes.FakeErrorOccurrenceService().Object;
-            var fakeUserService = fakes.FakeUserService().Object;
             var fakeLevelService = fakes.FakeLevelService().Object;
             var fakeEnvironmentService = fakes.FakeEnvironmentService().Object;
 

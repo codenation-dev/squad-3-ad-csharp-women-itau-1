@@ -10,7 +10,6 @@ namespace CentralErros.ConfigStartup
     {
         public AutoMapperProfile()
         {
-            CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<Environment, EnvironmentDTO>().ReverseMap();
             CreateMap<Level, LevelDTO>().ReverseMap();
             CreateMap<ErrorOccurrence, ErrorOccurrenceDTO>().ReverseMap();

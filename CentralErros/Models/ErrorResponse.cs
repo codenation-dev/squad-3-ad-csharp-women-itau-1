@@ -1,17 +1,17 @@
-﻿using IdentityModel.Client;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Identity;
 using SendGrid;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CentralErros.Models
 {
-    public class ErrorResponse 
+    public class ErrorResponse
     {
         public int Codigo { get; set; }
         public string Mensagem { get; set; }
-        public ErrorResponse InnerException { get; set; }
         public string[] Detalhes { get; set; }
+        public ErrorResponse InnerException { get; set; }
 
         public static ErrorResponse From(Exception e)
         {
@@ -27,32 +27,22 @@ namespace CentralErros.Models
             };
         }
 
-        public static object FromModelState(ModelStateDictionary modelState)
+        public static ErrorResponse FromIdentity(List<IdentityError> identityError)
         {
-            var erros = modelState.Values.SelectMany(x => x.Errors);
             return new ErrorResponse
             {
-                Codigo = 100,
+                Codigo = 400,
                 Mensagem = "Houve erro(s) no envio da requisição",
-                Detalhes = erros.Select(e => e.ErrorMessage).ToArray()
+                Detalhes = identityError.Select(e => e.Description).ToArray()
             };
         }
 
-        public static object FromTokenResponse(TokenResponse tokenResponse)
-        {
-            return new ErrorResponse()
-            {
-                Codigo = 401,
-                Mensagem = tokenResponse.ErrorDescription
-            };
-        }
-
-        internal static ErrorResponse FromEmail(SendGrid.Response response)
+        public static ErrorResponse FromEmail(Response response)
         {
             return new ErrorResponse
             {
                 Codigo = 600,
-                Mensagem = $"Não foi possível enviar email, {response.StatusCode}"
+                Mensagem = $"Não foi possível enviar e-mail, {response.StatusCode}"
             };
         }
     }

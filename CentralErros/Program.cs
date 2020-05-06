@@ -13,7 +13,7 @@ namespace CentralErros
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UsePort()            
+                .UsePort()
                 .UseStartup<Startup>();
     }
 

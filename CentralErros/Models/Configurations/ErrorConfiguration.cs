@@ -12,11 +12,6 @@ namespace CentralErros.Models.Configurations
         public void Configure(EntityTypeBuilder<ErrorOccurrence> builder)
         {
             builder.HasKey(x => x.Id);
-            
-            builder.HasOne(x => x.User)
-                   .WithMany(y => y.ErrorOccurrences)
-                   .HasForeignKey(x => x.UserId)
-                   .HasConstraintName("FK_Error_User");
 
             builder.HasOne(x => x.Environment)
                    .WithMany(y => y.ErrorOccurrences)
