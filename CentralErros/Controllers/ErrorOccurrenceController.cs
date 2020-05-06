@@ -47,7 +47,7 @@ namespace CentralErros.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IEnumerable<ErrorOccurrence>> GetAll()
+        public ActionResult<List<ErrorOccurrence>> GetAll()
         {
             var erros = _erroService.GetAllErrors();
             if (erros != null)
@@ -181,9 +181,6 @@ namespace CentralErros.Controllers
             // Montando as fk's
             var level = _levelService.FindByIdLevel(value.LevelId);
             var env = _environmentService.FindById(value.EnvironmentId);
-            string host = Dns.GetHostName();
-            Random random = new Random();
-            int randomNumber = random.Next(0, 1000);
 
             if (level != null && env != null)
             {
@@ -191,10 +188,10 @@ namespace CentralErros.Controllers
                 {
                     Title = value.Title,
                     RegistrationDate = DateTime.Now,
-                    Origin = host,
+                    Origin = value.Origin,
                     Filed = false,
                     Details = value.Details,                                      
-                    IdEvent = randomNumber,
+                    IdEvent = value.EventId,
                     EnvironmentId = env.Id,
                     LevelId = level.IdLevel,    
                     Username = value.Username,

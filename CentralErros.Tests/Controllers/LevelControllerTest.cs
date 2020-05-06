@@ -30,7 +30,7 @@ namespace CentralErros.Tests.Controllers
             var controller = new LevelController(fakeLevelService, 
                 fakes.Mapper, contexto);
 
-            var result = controller.Get(id);
+            var result = controller.Get();
 
             Assert.IsType<OkObjectResult>(result.Result);
             var actual = (result.Result as OkObjectResult).Value as Level;

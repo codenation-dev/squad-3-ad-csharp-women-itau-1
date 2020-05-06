@@ -32,7 +32,7 @@ namespace CentralErros.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IEnumerable<Level>> GetLevels()
+        public ActionResult<IEnumerable<Level>> Get()
         {
             var level = _levelService.FindAllLevels();
             if (level != null)

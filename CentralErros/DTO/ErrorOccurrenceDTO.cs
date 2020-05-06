@@ -22,6 +22,12 @@ namespace CentralErros.DTO
         
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Username { get; set; }
+
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        public int EventId { get; set; }
+
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        public string Origin { get; set; }
     }
 
     public class ErrorDetails
