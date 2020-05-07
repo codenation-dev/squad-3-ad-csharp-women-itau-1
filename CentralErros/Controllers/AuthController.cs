@@ -55,7 +55,7 @@ namespace CentralErros.Controllers
 
             if (result.Succeeded)
             {
-                return Ok(result.Succeeded);
+                return Ok("Usuário Cadastrado com sucesso!");
             }
             
             return BadRequest(ErrorResponse.FromIdentity(result.Errors.ToList()));
@@ -79,7 +79,7 @@ namespace CentralErros.Controllers
                 return BadRequest(loginUser);
             }
 
-            return NotFound(loginUser);
+            return NotFound("Email ou Senha inválidos!");
         }
 
         [HttpPost("logout")]
@@ -101,7 +101,7 @@ namespace CentralErros.Controllers
             var user = await _userManager.FindByEmailAsync(forgotPassword.Email);
             if (user == null)
             {
-                return NotFound($"Usuário '{forgotPassword}' não encontrado.");
+                return NotFound($"Usuário '{forgotPassword.Email}' não encontrado.");
             }
             else
             {
@@ -150,7 +150,7 @@ namespace CentralErros.Controllers
             var user = await _userManager.FindByEmailAsync(resetPassword.Email);
             if (user == null)
             {
-                return NotFound($"Usuário ID não encontrado.");
+                return NotFound($"Usuário {resetPassword.Email} não encontrado.");
             }
             else
             {
