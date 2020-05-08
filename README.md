@@ -6,6 +6,7 @@
 * [Tecnologias e Ferramentas Utilizadas](#tecnologias-utilizadas)
 * [Banco de Dados](#banco-de-dados)
 * [Deploy da Aplicação](#deploy-da-aplicação)
+* [Demonstração da Aplicação](#demonstração)
 * [Apresentação](#slides)
 * [Rotas](#rotas)
 * [FrontEnd](#front-end)
@@ -52,15 +53,20 @@ A arquitetura do projeto é formada por:
 - Docker
 
 ### Banco de dados
-- SQLServer criado através do Azure
+- SQLServer criado através do Azure.
 
 ### Deploy da Aplicação
 O deploy da aplicação foi feito através do Heroku, utilizando o Docker Image.
 * [API](https://central-erros-itau.herokuapp.com/swagger/index.html)
 
+### Demonstração da Aplicação
+* [VIDEO](https://youtu.be/8GfyJ87uzwk)
+
 ### Slides
-Slides utilizados na apresentação
+Slides utilizados na apresentação:
 * [Slides]
+
+
 
 ### Rotas
 
