@@ -67,8 +67,10 @@ Slides utilizados na apresentação:
 * [Slides]
 
 
-
 ### Rotas
+- AuthController
+ -- POST /Auth/registerUser - Realiza cadastro de um novo usuário.
+ -- POST /Auth/login - Realiza login do usuário cadastrado.
 
 ### Front-End
 
