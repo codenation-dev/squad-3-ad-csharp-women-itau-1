@@ -10,6 +10,7 @@ using CentralErros.Extensions;
 using CentralErros.Models;
 using CentralErros.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -154,8 +155,9 @@ namespace CentralErros.Controllers
             }
             else
             {
+                
                 // reset senha Identity
-                return Ok(await _userManager.ResetPasswordAsync(user, resetPassword.Code, resetPassword.Password));
+                return Ok(await _userManager.ResetPasswordAsync(user, resetPassword.Code, resetPassword.Password)+ " Senha alterada com sucesso!");
             }
         }
 

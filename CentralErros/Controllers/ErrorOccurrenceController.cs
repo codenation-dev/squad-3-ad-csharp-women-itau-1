@@ -173,6 +173,8 @@ namespace CentralErros.Controllers
 
         // POST: api/ErrorOccurence
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<ErrorOccurrenceDTO> Post([FromBody] ErrorOccurrenceDTO value)
         {
             if (!ModelState.IsValid)
@@ -199,7 +201,7 @@ namespace CentralErros.Controllers
 
                 var registryError = _erroService.SaveOrUpdate(errorOcurrence);
                 var retorno = _mapper.Map<ErrorOccurrence>(registryError);
-                return Ok(retorno);
+                return Ok("Erro cadastrado com sucesso!");
             }
             else
             {
