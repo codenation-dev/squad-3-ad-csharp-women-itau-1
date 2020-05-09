@@ -103,33 +103,18 @@ namespace CentralErros.Controllers
         [HttpGet("getErrorDetails/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<ErrorDetails> GetFiledErrors(int id)
+        public ActionResult<ErrorDetailsDTO> GetFiledErrors(int id)
         {
             var error = _erroService.FindById(id);
-
-            if (error != null)
+            if (error == null)
             {
-                var errorDetails = new ErrorDetails
-                {
-                    Details = error.Details,
-                    EventId = error.IdEvent,
-                    LevelName = error.Level.LevelName,
-                    RegistrationDate = error.RegistrationDate,
-                    Origin = error.Origin,
-                    Title = error.Title,
-                    Username = error.Username,
-
-                };
-                var retorno = _mapper.Map<ErrorDetails>(errorDetails);
-
-                return Ok(retorno);
+                return NotFound();
             }
 
-            else
-                return NotFound();
+            return Ok(_mapper.Map<ErrorDetailsDTO>(error));
         }
 
-        // GET: api/ErrorOccurence/5
+            // GET: api/ErrorOccurence/5
         [HttpPut("setFiledErrors/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

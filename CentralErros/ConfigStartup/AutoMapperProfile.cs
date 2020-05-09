@@ -13,6 +13,7 @@ namespace CentralErros.ConfigStartup
             CreateMap<Environment, EnvironmentDTO>().ReverseMap();
             CreateMap<Level, LevelDTO>().ReverseMap();
             CreateMap<ErrorOccurrence, ErrorOccurrenceDTO>().ReverseMap();
+            CreateMap<ErrorOccurrence, ErrorDetailsDTO>().ReverseMap();
         }
     }
 }
