@@ -69,11 +69,11 @@ Slides utilizados na apresentação:
 
 ### Rotas
 * AuthController
-    * !!!! POST /Auth/registerUser - Realiza cadastro de um novo usuário.
+    * POST /Auth/registerUser - Realiza cadastro de um novo usuário.
     * POST /Auth/login - Realiza login do usuário cadastrado.
     * POST /Auth/logout - Realiza o logout do usuário.
-!!!!* POST /Auth/forgotPassword - Envia codigo para que o usuário possa resetar a senha.
-    * !!! GET /Auth/resetPassword - Usuário deverá preencher Id e email para verificar o codigo de reset.
+    * POST /Auth/forgotPassword - Envia codigo para que o usuário possa resetar a senha.
+{c: green}    * GET {/c} /Auth/resetPassword - Usuário deverá preencher Id e email para verificar o codigo de reset.
     * POST /Auth/resetPasswordConfirm - Usuário reseta a senha.
 
 * ErrorOccurrenceController
