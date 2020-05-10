@@ -60,7 +60,8 @@ O deploy da aplicação foi feito através do Heroku, utilizando o Docker Image.
 * [API](https://central-erros-itau.herokuapp.com/swagger/index.html)
 
 ### Demonstração da Aplicação
-* [VIDEO](https://youtu.be/8GfyJ87uzwk)
+* [BACK-END](https://youtu.be/8GfyJ87uzwk)
+* [FRONT-END]()
 
 ### Slides
 Slides utilizados na apresentação:
@@ -73,18 +74,34 @@ Slides utilizados na apresentação:
     * POST /Auth/login - Realiza login do usuário cadastrado.
     * POST /Auth/logout - Realiza o logout do usuário.
     * POST /Auth/forgotPassword - Envia codigo para que o usuário possa resetar a senha.
-{c: green}    * GET {/c} /Auth/resetPassword - Usuário deverá preencher Id e email para verificar o codigo de reset.
+    * GET  /Auth/resetPassword - Usuário deverá preencher Id e email para verificar o codigo de reset.
     * POST /Auth/resetPasswordConfirm - Usuário reseta a senha.
 
 * ErrorOccurrenceController
     * POST /ErrorOccurrence - Cadastra novo erro na Central.
     * GET /ErrorOccurrence - Traz todos os erros ativos cadastrados na Central.
     * GET /ErrorOccurrence/id - Traz erro por número de ID.
-    * GET /ErrorOccurrence/getErrorDetails/id 
+    * GET /ErrorOccurrence/getErrorDetails/id - Traz detalhes de um determinado erro por ID.
+    * GET /ErrorOcurrence/getFiledErrors - Traz todos os erros arquivados
+    * GET /ErrorOccurrence/idAmbiente/idOrdenacao/idBusca/textoBuscado - Filtra os erros de acordo com os filtros selecionados.
+    * PUT /ErrorOccurrence/setFiledErrors/id - Arquiva erro por ID.
+    * PUT /ErrorOccurrence/setUnarchiveErrors/id - Desarquiva erro por ID.
+    * DELETE /ErrorOccurrence/id - Deleta erro da Central por ID.
 
+* Environment
+    * GET /Environment - Traz todos os ambientes da Central.
+    * DELETE /Environment/id - Deleta ambiente por ID.
+
+* Level
+    * GET /Level - Traz todos os levels da Central.
+    * DELETE /Level/id - Deleta level por ID.
 
 ### Front-End
+Front-end foi desenvolvido por Jaqueline Laurenti com a tecnologia React.
+[Repositório](https://github.com/Jaquelaurenti/central-erros-front)
+
 
 ### Agradecimentos
-
+    * Codenation
+    * Ingrid Oliveira
 
