@@ -46,7 +46,7 @@ namespace CentralErros.Controllers
 
             var user = new IdentityUser
             {
-                UserName = registerUser.Nome,
+                UserName = registerUser.Email,
                 Email = registerUser.Email,
                 EmailConfirmed = true
             };
@@ -136,7 +136,7 @@ namespace CentralErros.Controllers
                 resetPassword.Code = code;
                 resetPassword.Email = user.Email;
                 resetPassword.UserId = userId;
-                return Ok(resetPassword);
+                return Ok("Senha alterada com sucesso!");
             }
         }
 
