@@ -15,7 +15,8 @@ namespace CentralErros.Tests.Controllers
     {
         [Theory]
         [InlineData(1)]
-        public void Should_Be_Ok_When_Get_By_Id (int id)
+
+        public void Should_Be_Ok_When_Get_By_Id(int id)
         {
             var fakes = new FakeContext("ErrorOccurrenceControllerTest");
 
@@ -24,11 +25,11 @@ namespace CentralErros.Tests.Controllers
             var fakeEnvironmentService = fakes.FakeEnvironmentService().Object;
 
             var expected = fakes.Mapper.Map<ErrorOccurrence>(fakeErrorOccurrenceService.FindById(id));
-            
+
             var contexto = new CentralErroContexto(fakes.FakeOptions);
 
             var controller = new ErrorOccurrenceController(fakes.Mapper, contexto,
-                fakeErrorOccurrenceService,  fakeLevelService,
+                fakeErrorOccurrenceService, fakeLevelService,
                 fakeEnvironmentService);
             var result = controller.Get(id);
 
@@ -38,5 +39,16 @@ namespace CentralErros.Tests.Controllers
             Assert.NotNull(actual);
             Assert.Equal(expected, actual, new ErrorOccurrenceIdComparer());
         }
+
+
+
+
+
+
+
+
+
+
+        
     }
 }

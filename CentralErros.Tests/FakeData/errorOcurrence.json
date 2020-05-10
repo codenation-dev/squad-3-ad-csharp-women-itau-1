@@ -1,15 +1,29 @@
 ﻿[
-    {
-        "Id": 1,
-        "Title": "erro",
-        "RegistrationDate": "2020-05-02T22:24:27.222Z",
-        "Origin": "ip",
-        "Filed": false,
-        "Details": "details",
-        "IdEvent": 1,
-        "EnvironmentId": 1,
-        "LevelId": 1,
-        "LevelName": "error",
-        "EnvironmentName": "Dev"
-    }
+  {
+    "Id": 1,
+    "Title": "erro",
+    "RegistrationDate": "2020-05-02T22:24:27.222Z",
+    "Origin": "ip",
+    "Filed": false,
+    "Details": "details",
+    "IdEvent": 1,
+    "EnvironmentId": 1,
+    "LevelId": 1,
+    "LevelName": "error",
+    "EnvironmentName": "Dev"
+  }
+
+  {
+    "Id": 2,
+    "Title": "erro",
+    "RegistrationDate": "2020-05-02T22:24:27.222Z",
+    "Origin": "ip",
+    "Filed": false,
+    "Details": "details",
+    "IdEvent": 1,
+    "EnvironmentId": 1,
+    "LevelId": 1,
+    "LevelName": "error",
+    "EnvironmentName": "Dev"
+  }
 ]
