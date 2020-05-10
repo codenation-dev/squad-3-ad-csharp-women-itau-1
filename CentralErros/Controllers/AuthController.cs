@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -66,7 +66,7 @@ namespace CentralErros.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> Login(LoginUserDTO loginUser)
         {
-            if (!ModelState.IsValid)
+                if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var result = await _signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, true);

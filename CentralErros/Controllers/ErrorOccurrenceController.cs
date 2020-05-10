@@ -203,8 +203,19 @@ namespace CentralErros.Controllers
                 };
 
                 var registryError = _erroService.SaveOrUpdate(errorOcurrence);
-                var retorno = _mapper.Map<ErrorOccurrence>(registryError);
-                return Ok("Erro cadastrado com sucesso!");
+                if(registryError != null)
+                {
+                    return Ok("Ocorrencia cadastrada com sucesso!");
+                }
+                else
+                {
+                    object res = null;
+                    NotFoundObjectResult notfound = new NotFoundObjectResult(res);
+                    notfound.StatusCode = 400;
+                    notfound.Value = "Erro ao registrar Ocorrencia!";
+                    return NotFound(notfound);
+                }
+                
             }
             else
             {
@@ -214,8 +225,7 @@ namespace CentralErros.Controllers
 
                 if(level == null)
                 {
-                    notfound.Value = "O Level informado não foi encontrado!";
-                    return NotFound(notfound);
+                    
                 }
                 if(env == null)
                 {
@@ -238,7 +248,7 @@ namespace CentralErros.Controllers
             ErrorOccurrence errorOccurrence = _erroService.FindById(id);
 
             if (errorOccurrence == null)
-                return BadRequest("Erro não existe");
+                return BadRequest("Ocorrencia de Erro não existe");
             else
             {
                 _contexto.Errors.Remove(errorOccurrence);

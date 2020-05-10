@@ -24,6 +24,7 @@ namespace CentralErros
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -85,6 +86,16 @@ namespace CentralErros
                 });
             });
 
+            // adicionando o cors
+            services.AddCors(options => {
+                options.AddPolicy("Development",
+                    builder =>
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials());
+            });
 
             services.AddTransient<IEmailServices, EmailServices>();
 
@@ -99,8 +110,9 @@ namespace CentralErros
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors("Development");
             app.UseSwagger();
+        
 
             app.UseSwaggerUI(opt =>
             {
