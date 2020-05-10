@@ -88,20 +88,21 @@ Slides utilizados na apresentação:
     * PUT /ErrorOccurrence/setUnarchiveErrors/id - Desarquiva erro por ID.
     * DELETE /ErrorOccurrence/id - Deleta erro da Central por ID.
 
-* Environment
+* EnvironmentController
     * GET /Environment - Traz todos os ambientes da Central.
     * DELETE /Environment/id - Deleta ambiente por ID.
 
-* Level
+* LevelController
     * GET /Level - Traz todos os levels da Central.
     * DELETE /Level/id - Deleta level por ID.
 
 ### Front-End
 Front-end foi desenvolvido por Jaqueline Laurenti com a tecnologia React.
-[Repositório](https://github.com/Jaquelaurenti/central-erros-front)
+* [REPOSITÓRIO](https://github.com/Jaquelaurenti/central-erros-front)
 
 
 ### Agradecimentos
-    * Codenation
-    * Ingrid Oliveira
+* Codenation
+* Ingrid Oliveira
+* Itaú
 
