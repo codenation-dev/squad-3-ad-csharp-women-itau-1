@@ -170,5 +170,21 @@ namespace CentralErros.Services
 
             return errorsSearchList;
         }
+
+        public void FiledErrors(int id)
+        {
+            var error = FindById(id);
+            
+            if (error != null)
+            {
+                error.Filed = true;
+                _context.SaveChanges();
+            }
+        }
+
+        public IList<ErrorOccurrence> FindFiledErrors()
+        {
+            return _context.Errors.Where(x => x.Filed == true).ToList();
+        }
     }
 }
