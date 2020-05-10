@@ -22,7 +22,7 @@ namespace CentralErros.Services
 
         public IList<ErrorOccurrence> GetAllErrors()
         {
-            return _context.Errors.ToList();
+            return _context.Errors.Where(x => x.Filed == false).ToList();
         }
 
         public ErrorOccurrence SaveOrUpdate(ErrorOccurrence error)
@@ -59,17 +59,17 @@ namespace CentralErros.Services
             if (textoBuscado != "" && campoBuscado != 0)
             {
                 if (campoBuscado == 1)
-                    errorsList = _context.Errors.Where(x => x.Level.LevelName == textoBuscado).ToList();
+                    errorsList = _context.Errors.Where(x => x.Level.LevelName == textoBuscado).Where(x => x.Filed == false).ToList();
                 else if (campoBuscado == 2)
-                    errorsList = _context.Errors.Where(x => x.Details.Contains(textoBuscado)).ToList();
+                    errorsList = _context.Errors.Where(x => x.Details.Contains(textoBuscado)).Where(x => x.Filed == false).ToList();
                 else if (campoBuscado == 3)
-                    errorsList = _context.Errors.Where(x => x.Origin == textoBuscado).ToList();
+                    errorsList = _context.Errors.Where(x => x.Origin == textoBuscado).Where(x => x.Filed == false).ToList();
 
-                errorsSearchList = errorsList.Where(x => x.EnvironmentId == ambiente).ToList();
+                errorsSearchList = errorsList.Where(x => x.EnvironmentId == ambiente).Where(x => x.Filed == false).ToList();
             }
             else if (ambiente > 0)
             {
-                errorsSearchList = _context.Errors.Where(x => x.EnvironmentId == ambiente).ToList();
+                errorsSearchList = _context.Errors.Where(x => x.EnvironmentId == ambiente).Where(x => x.Filed == false).ToList();
             }
             else
             {
@@ -84,7 +84,7 @@ namespace CentralErros.Services
                 // Ordenação por LEVEL
                 if (campoOrdenacao == 1)
                 {
-                    errorsSearchList = errorsSearchList.OrderBy(x => x.LevelId).ToList();
+                    errorsSearchList = errorsSearchList.Where(x => x.Filed == false).OrderBy(x => x.LevelId).ToList();
                 }
                 // Ordenação por FREQUÊNCIA
                 else if (campoOrdenacao == 2)
@@ -99,7 +99,7 @@ namespace CentralErros.Services
                     {
                         if (campoBuscado == 1)
                         {
-                            var ordenacao = errorsList.GroupBy(x => x.LevelId)
+                            var ordenacao = errorsList.Where(x => x.Filed == false).GroupBy(x => x.LevelId)
                                         .Select(group => new
                                         {
                                             Level = group.Key,
@@ -109,12 +109,12 @@ namespace CentralErros.Services
                                         .ToList();
 
                             // aplicar ordenação definida na lista desejada                                    
-                            return errorsList.OrderBy(x => ordenacao.Select(y => y.Level).IndexOf(x.LevelId)).ToList();
+                            return errorsList.Where(x => x.Filed == false).OrderBy(x => ordenacao.Select(y => y.Level).IndexOf(x.LevelId)).ToList();
                         }
 
                         if (campoBuscado == 2)
                         {
-                            var ordenacao = errorsList.GroupBy(x => x.Details)
+                            var ordenacao = errorsList.Where(x => x.Filed == false).GroupBy(x => x.Details)
                                         .Select(group => new
                                         {
                                             Details = group.Key,
@@ -124,12 +124,12 @@ namespace CentralErros.Services
                                         .ToList();
 
                             // aplicar ordenação definida na lista desejada                                    
-                            return errorsList.OrderBy(x => ordenacao.Select(y => y.Details).IndexOf(x.Details)).ToList();
+                            return errorsList.OrderBy(x => ordenacao.Select(y => y.Details).IndexOf(x.Details)).Where(x => x.Filed == false).ToList();
                         }
 
                         if (campoBuscado == 3)
                         {
-                            var ordenacao = errorsList.GroupBy(x => x.Origin)
+                            var ordenacao = errorsList.Where(x => x.Filed == false).GroupBy(x => x.Origin)
                                         .Select(group => new
                                         {
                                             Origin = group.Key,
@@ -145,7 +145,7 @@ namespace CentralErros.Services
                     // se não foi informado nenhum campo a ser buscado eu orderno a frequencia pelo Environment
                     else
                     {
-                        var ordenacao = errorsList.GroupBy(x => x.EnvironmentId)
+                        var ordenacao = errorsList.Where(x => x.Filed == false).GroupBy(x => x.EnvironmentId)
                                         .Select(group => new
                                         {
                                             Environment = group.Key,
@@ -163,7 +163,7 @@ namespace CentralErros.Services
                 // Caso não for informado nenhuma ordenação eu ordeno pelo Environment
                 else
                 {
-                    errorsSearchList = errorsSearchList.OrderBy(x => x.EnvironmentId).ToList();
+                    errorsSearchList = errorsSearchList.Where(x => x.Filed == false).OrderBy(x => x.EnvironmentId).ToList();
                 }
 
             }

@@ -19,7 +19,7 @@ namespace CentralErros.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
-   // [Authorize]
+    [Authorize]
     public class ErrorOccurrenceController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -54,6 +54,7 @@ namespace CentralErros.Controllers
             {
 
                 return Ok(erros.Select(x => _mapper.Map<ErrorOccurrence>(x)).ToList());
+               
             }
             else
                 return NotFound();
@@ -156,7 +157,7 @@ namespace CentralErros.Controllers
                 return NotFound();
         }
 
-
+        //GET: api/getFiledErrors
         [HttpGet("getFiledErrors")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
