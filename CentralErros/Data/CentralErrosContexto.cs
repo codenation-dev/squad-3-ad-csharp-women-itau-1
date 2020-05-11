@@ -33,9 +33,9 @@ namespace CentralErros.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Level>().HasMany(l => l.ErrorOccurrences).WithOne(l => l.Level).IsRequired();
-            modelBuilder.Entity<Environment>().HasMany(e => e.ErrorOccurrences).WithOne(e => e.Environment).IsRequired();
-            modelBuilder.Entity<ErrorOccurrence>().HasKey(e => e.Id);
+            modelBuilder.ApplyConfiguration(new EnvironmentConfiguration());
+            modelBuilder.ApplyConfiguration(new ErrorConfiguration());
+            modelBuilder.ApplyConfiguration(new LevelConfiguration());
         }
     }
 }

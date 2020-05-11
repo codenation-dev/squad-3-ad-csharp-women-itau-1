@@ -8,7 +8,6 @@ namespace CentralErros.Models.Configurations
         public void Configure(EntityTypeBuilder<Environment> builder)
         {
             builder.HasKey(x => x.Id);
-
         }
     }
 }

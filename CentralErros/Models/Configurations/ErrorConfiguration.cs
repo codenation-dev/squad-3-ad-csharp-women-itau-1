@@ -23,7 +23,6 @@ namespace CentralErros.Models.Configurations
                    .WithMany(y => y.ErrorOccurrences)
                    .HasForeignKey(x => x.LevelId)
                    .HasConstraintName("FK_Error_Level_Id");
-
         }
     }
 
