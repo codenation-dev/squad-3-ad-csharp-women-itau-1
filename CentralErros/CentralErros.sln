@@ -5,9 +5,7 @@ VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CentralErros", "CentralErros.csproj", "{C53343C8-9020-46F7-BC83-EA9C3151D16B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CentralErros.Tests", "..\CentralErros.Tests\CentralErros.Tests.csproj", "{FB782780-29CA-4444-AD76-537EAB877C79}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralErros.Test", "..\CentralErros.Test\CentralErros.Test.csproj", "{0DFA2297-76E0-4105-946C-CB7287BB50BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CentralErros.Test", "..\CentralErros.Test\CentralErros.Test.csproj", "{0DFA2297-76E0-4105-946C-CB7287BB50BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +17,6 @@ Global
 		{C53343C8-9020-46F7-BC83-EA9C3151D16B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C53343C8-9020-46F7-BC83-EA9C3151D16B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C53343C8-9020-46F7-BC83-EA9C3151D16B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB782780-29CA-4444-AD76-537EAB877C79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB782780-29CA-4444-AD76-537EAB877C79}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB782780-29CA-4444-AD76-537EAB877C79}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB782780-29CA-4444-AD76-537EAB877C79}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0DFA2297-76E0-4105-946C-CB7287BB50BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0DFA2297-76E0-4105-946C-CB7287BB50BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DFA2297-76E0-4105-946C-CB7287BB50BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
