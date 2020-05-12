@@ -61,7 +61,7 @@ O deploy da aplicação foi feito através do Heroku, utilizando o Docker Image.
 
 ### Demonstração da Aplicação
 * [BACK-END](https://youtu.be/8GfyJ87uzwk)
-* [FRONT-END]()
+* [FRONT-END](https://youtu.be/YLRLoekZKCc)
 
 ### Slides
 Slides utilizados na apresentação:
