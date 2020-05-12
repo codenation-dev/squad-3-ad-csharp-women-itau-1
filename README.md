@@ -98,7 +98,7 @@ Slides utilizados na apresentação:
 
 ### Front-End
 Front-end foi desenvolvido por Jaqueline Laurenti com a tecnologia React.
-* [REPOSITÓRIO](https://github.com/Jaquelaurenti/central-erros-front)
+* [![multiselect-demo](https://media.giphy.com/media/fSRxyZEZnvDtrlqJXJ/giphy.gif)
 
 
 ### Agradecimentos
