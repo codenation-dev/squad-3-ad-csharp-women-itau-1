@@ -97,8 +97,8 @@ Slides utilizados na apresentação:
     * DELETE /Level/id - Deleta level por ID.
 
 ### Front-End
-Front-end foi desenvolvido por Jaqueline Laurenti com a tecnologia React.
-* [![multiselect-demo](https://media.giphy.com/media/fSRxyZEZnvDtrlqJXJ/giphy.gif)
+Front-end foi desenvolvido por Jaqueline Laurenti com a tecnologia React. <p>
+![frustrated-computer-baboon](https://media.giphy.com/media/fSRxyZEZnvDtrlqJXJ/giphy.gif)
 
 
 ### Agradecimentos
