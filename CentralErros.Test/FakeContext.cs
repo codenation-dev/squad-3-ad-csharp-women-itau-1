@@ -11,6 +11,7 @@ using Moq;
 using CentralErros.Services;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
 using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace CentralErros.Test
 {
@@ -45,7 +46,7 @@ namespace CentralErros.Test
                 cfg.CreateMap<ErrorOccurrence, ErrorOccurrenceDTO>().ReverseMap();
                 cfg.CreateMap<ErrorOccurrence, ErrorDetailsDTO>().ReverseMap();
                 cfg.CreateMap<Level, LevelDTO>().ReverseMap();
-                
+
             });
 
             this.Mapper = configuration.CreateMapper();
@@ -109,6 +110,8 @@ namespace CentralErros.Test
             service.Setup(x => x.GetAllErrors())
                 .Returns(() => GetFakeData<ErrorOccurrence>().ToList());
 
+            service.Setup(x => x.FiledErrors(It.IsAny<int>()));
+
             service.Setup(x => x.FindFiledErrors())
                 .Returns(() => GetFakeData<ErrorOccurrence>()
                 .Where(x => x.Filed == true)
@@ -122,6 +125,102 @@ namespace CentralErros.Test
                     return error;
                 });
 
+
+            service.Setup(x => x.FindByFilters(It.IsAny<int>(), It.IsAny<int>(),
+                It.IsAny<int>(), It.IsAny<string>()))
+                .Returns((int ambiente, int? campoOrdenacao, int? campoBuscado,
+                string textoBuscado) =>
+                {
+                    var fakeError = new ErrorOccurrence();
+
+                    if (textoBuscado == "error")
+                        fakeError.LevelId = 1;
+                    else if (textoBuscado == "warn")
+                        fakeError.LevelId = 2;
+                    else
+                        fakeError.LevelId = 3;
+
+                    List<ErrorOccurrence> errorsSearchList = new List<ErrorOccurrence>();
+                    List<ErrorOccurrence> errorsList = new List<ErrorOccurrence>();
+
+                    if (textoBuscado != "" && campoBuscado != 0 && campoBuscado != null)
+                    {
+                        if (campoBuscado == 1)
+                            errorsList = GetFakeData<ErrorOccurrence>().Where(x => x.LevelId == fakeError.LevelId && x.EnvironmentId == ambiente).ToList();
+                        else if (campoBuscado == 2)
+                            errorsList = GetFakeData<ErrorOccurrence>().Where(x => x.Details.Contains(textoBuscado) && x.EnvironmentId == ambiente).ToList();
+                        else if (campoBuscado == 3)
+                            errorsList = GetFakeData<ErrorOccurrence>().Where(x => x.Origin == textoBuscado && x.EnvironmentId == ambiente).ToList();
+                    }
+                    else if (ambiente > 0)
+                    {
+                        errorsList = GetFakeData<ErrorOccurrence>().Where(x => x.EnvironmentId == ambiente).ToList();
+                    }
+                    else
+                    {
+                        errorsList = GetFakeData<ErrorOccurrence>().ToList();
+                    }
+
+                    if (errorsList.Count() > 0)
+                    {
+
+                        if (campoOrdenacao == 1 && campoBuscado != 1)
+                        {
+                            errorsSearchList = errorsList.OrderBy(x => x.LevelId).ToList();
+                        }
+                        else if (campoOrdenacao == 2)
+                        {
+                            if (campoBuscado != 1)
+                            {
+                                var ordenacao = errorsList.GroupBy(x => x.LevelId)
+                                            .Select(group => new
+                                            {
+                                                Level = group.Key,
+                                                Quantidade = group.Count()
+                                            })
+                                            .OrderByDescending(x => x.Quantidade)
+                                            .ToList();
+
+                                errorsSearchList = errorsList.OrderBy(x => ordenacao.Select(y => y.Level).IndexOf(x.LevelId)).ToList();
+                            }
+                            else
+                            {
+                                var ordenacao = errorsList.GroupBy(x => x.Details)
+                                                                    .Select(group => new
+                                                                    {
+                                                                        Details = group.Key,
+                                                                        Quantidade = group.Count()
+                                                                    })
+                                                                    .OrderByDescending(x => x.Quantidade)
+                                                                    .ToList();
+
+                                errorsSearchList = errorsList.OrderBy(x => ordenacao.Select(y => y.Details).IndexOf(x.Details)).ToList();
+                            }
+                        }
+                        else
+                        {
+                            var ordenacao = errorsList.GroupBy(x => x.Origin)
+                                                                    .Select(group => new
+                                                                    {
+                                                                        Origin = group.Key,
+                                                                        Quantidade = group.Count()
+                                                                    })
+                                                                    .OrderByDescending(x => x.Quantidade)
+                                                                    .ToList();
+
+                            errorsSearchList = errorsList.OrderBy(x => ordenacao.Select(y => y.Origin).IndexOf(x.Origin)).ToList();
+                        }
+                    }
+                    //caso não for informado nenhuma ordenação, eu ordeno pelo Environment
+                    else
+                    {
+                        errorsSearchList = errorsList.OrderBy(x => x.Origin).ToList();
+                    }
+
+                    errorsSearchList = errorsSearchList.Where(x => x.Filed == false).ToList();
+
+                    return errorsSearchList;
+                });
             return service;
         }
 

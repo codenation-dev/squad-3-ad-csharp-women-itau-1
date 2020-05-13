@@ -8,7 +8,7 @@ namespace CentralErros.Services
         ErrorOccurrence FindById(int id);        
         IList<ErrorOccurrence> GetAllErrors();
         ErrorOccurrence SaveOrUpdate(ErrorOccurrence error);
-        List<ErrorOccurrence> FindByFilters(int ambiente, int campoOrdenacao, int campoBuscado, string textoBuscado);
+        List<ErrorOccurrence> FindByFilters(int ambiente, int? campoOrdenacao, int? campoBuscado, string textoBuscado);
         IList<ErrorOccurrence> FindFiledErrors();
 
         void FiledErrors(int id);

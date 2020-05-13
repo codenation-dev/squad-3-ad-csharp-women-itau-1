@@ -198,5 +198,36 @@ namespace CentralErros.Test.Controllers
             Assert.NotNull(actual);
             Assert.Equal(expected, actual, new ErrorDetailsDTOComparer());
         }
+
+
+        [Theory]
+        [InlineData(3, 1, 1, "error")]
+        [InlineData(1, 1, 2, "details")]
+        [InlineData(1, 1, 0, "ip")]
+        [InlineData(1, 0, 0, "details")]
+        public void Should_Be_Ok_When_Get_By_Filter(int ambiente, int campoOrdenacao, int campoBuscado,
+                string textoBuscado)
+        {
+            var fakes = new FakeContext("ErrorOccurrenceControllerTest");
+
+            var fakeErrorOccurrenceService = fakes.FakeErrorOccurrenceService().Object;
+            var fakeLevelService = fakes.FakeLevelService().Object;
+            var fakeEnvironmentService = fakes.FakeEnvironmentService().Object;
+
+            var expected = fakes.Mapper.Map<List<ErrorOccurrence>>(fakeErrorOccurrenceService.FindByFilters(ambiente, campoOrdenacao, campoBuscado, textoBuscado));
+
+            var contexto = new CentralErroContexto(fakes.FakeOptions);
+
+            var controller = new ErrorOccurrenceController(fakes.Mapper, contexto,
+                fakeErrorOccurrenceService, fakeLevelService,
+                fakeEnvironmentService);
+            var result = controller.GetErrorFilter(ambiente, campoOrdenacao, campoBuscado, textoBuscado);
+
+            Assert.IsType<OkObjectResult>(result.Result);
+            var actual = (result.Result as OkObjectResult).Value as List<ErrorOccurrence>;
+
+            Assert.NotNull(actual);
+            Assert.Equal(expected, actual, new ErrorOccurrenceIdComparer());
+        }
     }
 }

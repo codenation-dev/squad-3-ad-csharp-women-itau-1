@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CentralErros.Models;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +38,7 @@ namespace CentralErros.Services
             return error;
         }
 
-        public List<ErrorOccurrence> FindByFilters(int ambiente, int campoOrdenacao, int campoBuscado, string textoBuscado)
+        public List<ErrorOccurrence> FindByFilters(int ambiente, int? campoOrdenacao, int? campoBuscado, string textoBuscado)
         {
             // Campo buscado
             // 1 - Level
@@ -56,117 +57,82 @@ namespace CentralErros.Services
             List<ErrorOccurrence> errorsSearchList = new List<ErrorOccurrence>();
             List<ErrorOccurrence> errorsList = new List<ErrorOccurrence>();
 
-            if (textoBuscado != "" && campoBuscado != 0)
+            if (textoBuscado != "" && campoBuscado != 0 && campoBuscado != null)
             {
                 if (campoBuscado == 1)
-                    errorsList = _context.Errors.Where(x => x.Level.LevelName == textoBuscado).Where(x => x.Filed == false).ToList();
+                    errorsList = _context.Errors.Where(x => x.Level.LevelName == textoBuscado && x.EnvironmentId == ambiente).ToList();
                 else if (campoBuscado == 2)
-                    errorsList = _context.Errors.Where(x => x.Details.Contains(textoBuscado)).Where(x => x.Filed == false).ToList();
+                    errorsList = _context.Errors.Where(x => x.Details.Contains(textoBuscado) && x.EnvironmentId == ambiente).ToList();
                 else if (campoBuscado == 3)
-                    errorsList = _context.Errors.Where(x => x.Origin == textoBuscado).Where(x => x.Filed == false).ToList();
-
-                errorsSearchList = errorsList.Where(x => x.EnvironmentId == ambiente).Where(x => x.Filed == false).ToList();
+                    errorsList = _context.Errors.Where(x => x.Origin == textoBuscado && x.EnvironmentId == ambiente).ToList();
             }
             else if (ambiente > 0)
             {
-                errorsSearchList = _context.Errors.Where(x => x.EnvironmentId == ambiente).Where(x => x.Filed == false).ToList();
+                errorsList = _context.Errors.Where(x => x.EnvironmentId == ambiente).ToList();
             }
             else
             {
-                errorsSearchList = _context.Errors.ToList();
+                errorsList = _context.Errors.ToList();
             }
 
-
-            // Só entra na ordenção se houver registros no errorSearchList
-            if (errorsSearchList.Count() > 0)
+            if (errorsList.Count() > 0)
             {
 
-                // Ordenação por LEVEL
-                if (campoOrdenacao == 1)
+                if (campoOrdenacao == 1 && campoBuscado != 1)
                 {
-                    errorsSearchList = errorsSearchList.Where(x => x.Filed == false).OrderBy(x => x.LevelId).ToList();
+                    errorsSearchList = errorsList.OrderBy(x => x.LevelId).ToList();
                 }
-                // Ordenação por FREQUÊNCIA
                 else if (campoOrdenacao == 2)
                 {
-                    // Se foi preenchido o campo a ser bucado eu verifico a frequencia com base no que foi informado:
-                    // Campo buscado
-                    // 1 - Level
-                    // 2 - Descrição
-                    // 3 - Origem
-
-                    if (campoBuscado > 0)
+                    if (campoBuscado != 1)
                     {
-                        if (campoBuscado == 1)
-                        {
-                            var ordenacao = errorsList.Where(x => x.Filed == false).GroupBy(x => x.LevelId)
-                                        .Select(group => new
-                                        {
-                                            Level = group.Key,
-                                            Quantidade = group.Count()
-                                        })
-                                        .OrderByDescending(x => x.Quantidade)
-                                        .ToList();
+                        var ordenacao = errorsList.GroupBy(x => x.LevelId)
+                                    .Select(group => new
+                                    {
+                                        Level = group.Key,
+                                        Quantidade = group.Count()
+                                    })
+                                    .OrderByDescending(x => x.Quantidade)
+                                    .ToList();
 
-                            // aplicar ordenação definida na lista desejada                                    
-                            return errorsList.Where(x => x.Filed == false).OrderBy(x => ordenacao.Select(y => y.Level).IndexOf(x.LevelId)).ToList();
-                        }
-
-                        if (campoBuscado == 2)
-                        {
-                            var ordenacao = errorsList.Where(x => x.Filed == false).GroupBy(x => x.Details)
-                                        .Select(group => new
-                                        {
-                                            Details = group.Key,
-                                            Quantidade = group.Count()
-                                        })
-                                        .OrderByDescending(x => x.Quantidade)
-                                        .ToList();
-
-                            // aplicar ordenação definida na lista desejada                                    
-                            return errorsList.OrderBy(x => ordenacao.Select(y => y.Details).IndexOf(x.Details)).Where(x => x.Filed == false).ToList();
-                        }
-
-                        if (campoBuscado == 3)
-                        {
-                            var ordenacao = errorsList.Where(x => x.Filed == false).GroupBy(x => x.Origin)
-                                        .Select(group => new
-                                        {
-                                            Origin = group.Key,
-                                            Quantidade = group.Count()
-                                        })
-                                        .OrderByDescending(x => x.Quantidade)
-                                        .ToList();
-
-                            // aplicar ordenação definida na lista desejada                                    
-                            return errorsList.OrderBy(x => ordenacao.Select(y => y.Origin).IndexOf(x.Origin)).ToList();
-                        }
+                        errorsSearchList = errorsList.OrderBy(x => ordenacao.Select(y => y.Level).IndexOf(x.LevelId)).ToList();
                     }
-                    // se não foi informado nenhum campo a ser buscado eu orderno a frequencia pelo Environment
                     else
                     {
-                        var ordenacao = errorsList.Where(x => x.Filed == false).GroupBy(x => x.EnvironmentId)
-                                        .Select(group => new
-                                        {
-                                            Environment = group.Key,
-                                            Quantidade = group.Count()
-                                        })
-                                        .OrderByDescending(x => x.Quantidade)
-                                        .ToList();
+                        var ordenacao = errorsList.GroupBy(x => x.Details)
+                                                            .Select(group => new
+                                                            {
+                                                                Details = group.Key,
+                                                                Quantidade = group.Count()
+                                                            })
+                                                            .OrderByDescending(x => x.Quantidade)
+                                                            .ToList();
 
-                        // aplicar ordenação definida na lista desejada                                    
-                        return errorsList.OrderBy(x => ordenacao.Select(y => y.Environment).IndexOf(x.EnvironmentId)).ToList();
+                        errorsSearchList = errorsList.OrderBy(x => ordenacao.Select(y => y.Details).IndexOf(x.Details)).ToList();
                     }
-
-
                 }
-                // Caso não for informado nenhuma ordenação eu ordeno pelo Environment
+                //se não foi informado nenhum campo a ser buscado, eu ordeno a frequencia pela Origin
                 else
                 {
-                    errorsSearchList = errorsSearchList.Where(x => x.Filed == false).OrderBy(x => x.EnvironmentId).ToList();
-                }
+                    var ordenacao = errorsList.GroupBy(x => x.Origin)
+                                                            .Select(group => new
+                                                            {
+                                                                Origin = group.Key,
+                                                                Quantidade = group.Count()
+                                                            })
+                                                            .OrderByDescending(x => x.Quantidade)
+                                                            .ToList();
 
+                    errorsSearchList = errorsList.OrderBy(x => ordenacao.Select(y => y.Origin).IndexOf(x.Origin)).ToList();
+                }
             }
+            //caso não for informado nenhuma ordenação
+            else
+            {
+                errorsSearchList = errorsSearchList.OrderBy(x => x.Origin).ToList();
+            }
+
+            errorsSearchList = errorsSearchList.Where(x => x.Filed == false).ToList();
 
             return errorsSearchList;
         }
@@ -174,7 +140,7 @@ namespace CentralErros.Services
         public void FiledErrors(int id)
         {
             var error = FindById(id);
-            
+
             if (error != null)
             {
                 error.Filed = true;

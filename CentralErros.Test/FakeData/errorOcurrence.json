@@ -1,17 +1,16 @@
 ﻿[
-  {
-    "Id": 1,
-    "Title": "erro",
-    "RegistrationDate": "2020-05-02T22:24:27.222Z",
-    "Origin": "ip",
-    "Filed": false,
-    "Details": "details",
-    "IdEvent": 1,
-    "EnvironmentId": 1,
-    "LevelId": 1,
-    "LevelName": "error",
-    "EnvironmentName": "Dev"
-  },
+    {
+        "Id": 1,
+        "Title": "erro",
+        "RegistrationDate": "2020-05-02T22:24:27.222Z",
+        "Origin": "ip",
+        "Filed": false,
+        "Details": "details",
+        "Username": "Pri",
+        "IdEvent": 1,
+        "EnvironmentId": 1,
+        "LevelId": 1
+    },
 
     {
         "Id": 2,
@@ -20,10 +19,126 @@
         "Origin": "ip",
         "Filed": true,
         "Details": "details",
-        "IdEvent": 1,
+        "Username": "Ju",
+        "IdEvent": 2,
         "EnvironmentId": 1,
-        "LevelId": 1,
-        "LevelName": "error",
-        "EnvironmentName": "Dev"
+        "LevelId": 1
+    },
+
+    {
+        "Id": 3,
+        "Title": "erro",
+        "RegistrationDate": "2020-12-02T22:24:27.222Z",
+        "Origin": "ip 1",
+        "Filed": false,
+        "Details": "details 3",
+        "Username": "Ma",
+        "IdEvent": 3,
+        "EnvironmentId": 3,
+        "LevelId": 1
+    },
+
+    {
+        "Id": 4,
+        "Title": "erro",
+        "RegistrationDate": "2020-12-02T22:24:27.222Z",
+        "Origin": "ip 1",
+        "Filed": false,
+        "Details": "details 2",
+        "Username": "Jaque",
+        "IdEvent": 4,
+        "EnvironmentId": 3,
+        "LevelId": 3
+    },
+
+    {
+        "Id": 5,
+        "Title": "erro",
+        "RegistrationDate": "2020-12-02T22:24:27.222Z",
+        "Origin": "ip 3",
+        "Filed": false,
+        "Details": "details 1",
+        "Username": "Ju",
+        "IdEvent": 5,
+        "EnvironmentId": 3,
+        "LevelId": 2
+    },
+
+    {
+        "Id": 6,
+        "Title": "erro",
+        "RegistrationDate": "2020-12-02T22:24:27.222Z",
+        "Origin": "ip 3",
+        "Filed": false,
+        "Details": "details 1",
+        "Username": "Ju",
+        "IdEvent": 6,
+        "EnvironmentId": 3,
+        "LevelId": 1
+    },
+
+    {
+        "Id": 7,
+        "Title": "erro",
+        "RegistrationDate": "2020-12-02T22:24:27.222Z",
+        "Origin": "ip 1",
+        "Filed": false,
+        "Details": "details 2",
+        "Username": "Ju",
+        "IdEvent": 7,
+        "EnvironmentId": 3,
+        "LevelId": 1
+    },
+
+    {
+        "Id": 8,
+        "Title": "erro",
+        "RegistrationDate": "2020-12-02T22:24:27.222Z",
+        "Origin": "ip 2",
+        "Filed": false,
+        "Details": "details 2",
+        "Username": "Ju",
+        "IdEvent": 8,
+        "EnvironmentId": 3,
+        "LevelId": 2
+    },
+
+    {
+        "Id": 9,
+        "Title": "erro",
+        "RegistrationDate": "2020-12-02T22:24:27.222Z",
+        "Origin": "ip 2",
+        "Filed": false,
+        "Details": "details 2",
+        "Username": "Ju",
+        "IdEvent": 9,
+        "EnvironmentId": 3,
+        "LevelId": 1
+    },
+
+    {
+        "Id": 10,
+        "Title": "erro",
+        "RegistrationDate": "2020-12-02T22:24:27.222Z",
+        "Origin": "ip 2",
+        "Filed": false,
+        "Details": "details 2",
+        "Username": "Ju",
+        "IdEvent": 10,
+        "EnvironmentId": 3,
+        "LevelId": 1
+    },
+
+    {
+        "Id": 11,
+        "Title": "erro",
+        "RegistrationDate": "2020-12-02T22:24:27.222Z",
+        "Origin": "ip 2",
+        "Filed": false,
+        "Details": "details 3",
+        "Username": "Ju",
+        "IdEvent": 11,
+        "EnvironmentId": 3,
+        "LevelId": 1
     }
 ]
