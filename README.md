@@ -5,6 +5,7 @@
 * [Objetivo](#objetivo)
 * [Tecnologias e Ferramentas Utilizadas](#tecnologias-utilizadas)
 * [Banco de Dados](#banco-de-dados)
+* [Rodar Aplicação](#run-aplicacao)
 * [Deploy da Aplicação](#deploy-da-aplicação)
 * [Demonstração da Aplicação](#demonstração)
 * [Apresentação](#slides)
@@ -54,6 +55,12 @@ A arquitetura do projeto é formada por:
 
 ### Banco de dados
 - SQLServer criado através do Azure.
+
+### Rodar Aplicação
+![frustrated-computer-baboon](https://media.giphy.com/media/h8yZBiRGWRu8KuukDB/giphy.gif)
+![frustrated-computer-baboon](https://media.giphy.com/media/h8Irzr4ilkQx3UzceS/giphy.gif) <p>
+   Acessar a url: https://localhost:5001/swagger/index.html 
+
 
 ### Deploy da Aplicação
 O deploy da aplicação foi feito através do Heroku, utilizando o Docker Image.
@@ -105,4 +112,3 @@ Front-end foi desenvolvido por Jaqueline Laurenti com a tecnologia React. <p>
 * Codenation
 * Ingrid Oliveira
 * Itaú
-
