@@ -7,7 +7,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using CentralErros.Models;
-
+using CentralErros.Utils;
 namespace CentralErros.ConfigStartup
 {
     public static class IdentityConfig
@@ -15,8 +15,9 @@ namespace CentralErros.ConfigStartup
         public static IServiceCollection AddIdentityConfiguration(this IServiceCollection services,
             IConfiguration configuration)
         {
+            var connection = Utils.Utils.DecryptConnectionString(configuration.GetConnectionString("DefaultConnection"));
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(connection));
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()

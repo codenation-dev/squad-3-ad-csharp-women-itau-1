@@ -3,7 +3,7 @@ using CentralErros.Models.Configurations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
+using CentralErros.Utils; 
 namespace CentralErros.Models
 {
     public class CentralErroContexto : DbContext
@@ -26,8 +26,9 @@ namespace CentralErros.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=centralerrors.database.windows.net;Database=CentralDeErros ;User=jaquelaurenti; " +
-                    "Password=Br@sil9090;");
+                var connection = Utils.Utils.DecryptConnectionString("U2VydmVyPWNlbnRyYWxlcnJvcnMuZGF0YWJhc2Uud2luZG93cy5uZXQ7RGF0YWJhc2U9Q2VudHJhbERlRXJyb3MgO1VzZXI9amFxdWVsYXVyZW50aTsgUGFzc3dvcmQ9QnJAc2lsOTA5MDs=");
+
+                optionsBuilder.UseSqlServer(connection);
             }
         }
 
