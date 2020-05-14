@@ -111,7 +111,13 @@ namespace CentralErros.Controllers
                 resetPassword.Code = code;
                 resetPassword.Email = user.Email;
                 resetPassword.UserId = user.Id;
-                return Ok(resetPassword);  
+                return Ok(resetPassword);
+
+                // Comentando o trecho de codigo de envio de email
+                //var forgot = await ForgotMainPassword(user);
+                //if (forgot.Enviado)
+                    //return Ok();
+                //return Unauthorized(forgot.error);
             }
         }
 
@@ -155,27 +161,23 @@ namespace CentralErros.Controllers
             }
             else
             {
-                
-                // reset senha Identity
                 return Ok(await _userManager.ResetPasswordAsync(user, resetPassword.Code, resetPassword.Password)+ " Senha alterada com sucesso!");
             }
         }
 
         private async Task<LoginResponseDTO> GerarJwt(string email)
         {
-            // buscar usuario na base
+            
             var user = await _userManager.FindByEmailAsync(email);
-            // buscar claims
+            
             var claims = await _userManager.GetClaimsAsync(user);
-            // buscar regras
+            
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            // add nas claims
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
             claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
             claims.Add(new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName));
 
-            // add roles
             foreach (var userRole in userRoles)
             {
                 claims.Add(new Claim("role", userRole));
@@ -184,13 +186,10 @@ namespace CentralErros.Controllers
             var identityClaims = new ClaimsIdentity();
             identityClaims.AddClaims(claims);
 
-            // criar token
             var tokenHandler = new JwtSecurityTokenHandler();
 
-            // chave - app settings
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-
-            // criar token baseado nas info
+            
             var token = tokenHandler.CreateToken(new SecurityTokenDescriptor
             {
                 Issuer = _appSettings.Emissor,
@@ -200,10 +199,8 @@ namespace CentralErros.Controllers
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             });
 
-            // gerar código
             var encodedToken = tokenHandler.WriteToken(token);
 
-            // add obj resposta
             var response = new LoginResponseDTO
             {
                 AccessToken = encodedToken,
@@ -221,13 +218,10 @@ namespace CentralErros.Controllers
 
         private async Task<EmailResponse> ForgotMainPassword(IdentityUser user)
         {
-            // gerar JWT para reset de senha
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            // criar link para retorno 
             var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, HttpUtility.UrlEncode(code), Request.Scheme);
 
-            // método de extensão de URL
             return await _emailServices.SendEmailResetPasswordAsync(user.Email, callbackUrl);
         }
     }

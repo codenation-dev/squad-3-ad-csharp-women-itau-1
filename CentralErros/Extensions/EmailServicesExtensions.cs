@@ -7,7 +7,6 @@ namespace CentralErros.Extensions
 {
     public static class EmailServicesExtensions
     {
-        // extensao IEmailServices
         public static Task<EmailResponse> SendEmailResetPasswordAsync(this IEmailServices emailServices, string email, string link)
         {
             return emailServices.SendEmailBySendGridAsync(email, "Reset Password",

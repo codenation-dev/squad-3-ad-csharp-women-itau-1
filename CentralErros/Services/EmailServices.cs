@@ -21,10 +21,8 @@ namespace CentralErros.Services
         {
             try
             {
-                // buscar SendGrid key
                 var client = new SendGridClient(_sendGridOptions.SendGridKey);
 
-                // obj de email
                 var msg = new SendGridMessage()
                 {
                     From = new EmailAddress(_sendGridOptions.FromEmail, _sendGridOptions.FromFullName),
@@ -33,17 +31,15 @@ namespace CentralErros.Services
                     HtmlContent = mensagem
                 };
 
-                // email do usuario
-                msg.AddTo(new EmailAddress("apideuerro@gmail.com", email));
+                msg.AddTo(new EmailAddress(email));
 
-                // envio do email
                 var responseSend = await client.SendEmailAsync(msg);
 
-                // obj retorno
-                var retorno = new EmailResponse();
-                retorno.Enviado = true;
+                var retorno = new EmailResponse
+                {
+                    Enviado = true
+                };
 
-                // verificação de envio
                 if (!responseSend.StatusCode.Equals(System.Net.HttpStatusCode.Accepted))
                 {
                     retorno.Enviado = false;
