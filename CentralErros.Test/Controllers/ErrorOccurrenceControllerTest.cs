@@ -231,5 +231,47 @@ namespace CentralErros.Test.Controllers
             Assert.NotNull(actual);
             Assert.Equal(expected, actual, new ErrorOccurrenceIdComparer());
         }
+
+        [Fact]
+        public void Should_Be_OK_Post()
+        {
+            var fakes = new FakeContext("ErrorControllerPost");
+            var fakeErrorOccurrenceService = fakes.FakeErrorOccurrenceService().Object;
+            var fakeLevelService = fakes.FakeLevelService().Object;
+            var fakeEnvironmentService = fakes.FakeEnvironmentService().Object;
+            var contexto = new CentralErroContexto(fakes.FakeOptions);
+            List<ErrorOccurrenceDTO> expected = fakes.GetFakeData<ErrorOccurrenceDTO>();
+
+            var controller = new ErrorOccurrenceController(fakes.Mapper, contexto,
+                fakeErrorOccurrenceService, fakeLevelService,
+                fakeEnvironmentService);
+            
+            foreach(var item in expected)
+            {
+                var result = controller.Post(item);
+
+                Assert.IsType<OkObjectResult>(result.Result);
+                var actual = (result.Result as OkObjectResult).Value as List<ErrorOccurrenceDTO>;
+
+                Assert.NotNull(actual);
+                Assert.Equal(expected.Count, actual.Count);
+
+                foreach(var atual in actual)
+                {
+                    foreach(var exp in expected)
+                    {
+                        Assert.Equal(exp.Title, atual.Title);
+                        Assert.Equal(exp.Details, atual.Details);
+                        Assert.Equal(exp.Username, atual.Username);
+                        Assert.Equal(exp.Origin, atual.Origin);
+                        Assert.Equal(exp.EnvironmentId, atual.EnvironmentId);
+                        Assert.Equal(exp.LevelId, atual.LevelId);
+                        Assert.Equal(exp.EventId, atual.EventId);
+
+                    }
+                }
+            }
+        }
+
     }
 }
