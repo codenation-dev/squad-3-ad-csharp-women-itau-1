@@ -17,7 +17,7 @@ namespace CentralErros.Test.Controllers
         [Fact]
         public void Should_Be_Ok_When_Get_All()
         {
-            var fakes = new FakeContext("ErrorOccurrenceControllerTest");
+            var fakes = new FakeContext("ErrorControllerGetAll");
 
             var fakeErrorOccurrenceService = fakes.FakeErrorOccurrenceService().Object;
             var fakeLevelService = fakes.FakeLevelService().Object;
@@ -44,7 +44,7 @@ namespace CentralErros.Test.Controllers
         [InlineData(2)]
         public void Should_Be_Ok_When_Get_By_Id(int id)
         {
-            var fakes = new FakeContext("ErrorOccurrenceControllerTest");
+            var fakes = new FakeContext("ErrorControllerId");
 
             var fakeErrorOccurrenceService = fakes.FakeErrorOccurrenceService().Object;
             var fakeLevelService = fakes.FakeLevelService().Object;
@@ -69,7 +69,7 @@ namespace CentralErros.Test.Controllers
         [Fact]
         public void Should_Be_Ok_When_Get_Filed()
         {
-            var fakes = new FakeContext("ErrorOccurrenceControllerTest");
+            var fakes = new FakeContext("ErrorControllerGetFiled");
 
             var fakeErrorOccurrenceService = fakes.FakeErrorOccurrenceService().Object;
             var fakeLevelService = fakes.FakeLevelService().Object;
@@ -96,7 +96,7 @@ namespace CentralErros.Test.Controllers
         [InlineData(2)]
         public void Should_Be_Ok_When_Delete_By_Id(int id)
         {
-            var fakes = new FakeContext("ErrorOccurrenceControllerTest");
+            var fakes = new FakeContext("ErrorControllerDelete");
 
             var fakeErrorOccurrenceService = fakes.FakeErrorOccurrenceService().Object;
             var fakeLevelService = fakes.FakeLevelService().Object;
@@ -123,7 +123,7 @@ namespace CentralErros.Test.Controllers
         [InlineData(2)]
         public void Should_Be_Ok_When_Set_Unarchirve_Error_By_Id(int id)
         {
-            var fakes = new FakeContext("ErrorOccurrenceControllerTest");
+            var fakes = new FakeContext("ErrorControllerUnarchirve");
 
             var fakeErrorOccurrenceService = fakes.FakeErrorOccurrenceService().Object;
             var fakeLevelService = fakes.FakeLevelService().Object;
@@ -150,7 +150,7 @@ namespace CentralErros.Test.Controllers
         [InlineData(2)]
         public void Should_Be_Ok_When_Set_Filed_Error_By_Id(int id)
         {
-            var fakes = new FakeContext("ErrorOccurrenceControllerTest");
+            var fakes = new FakeContext("ErrorControllerFile");
 
             var fakeErrorOccurrenceService = fakes.FakeErrorOccurrenceService().Object;
             var fakeLevelService = fakes.FakeLevelService().Object;
@@ -177,7 +177,7 @@ namespace CentralErros.Test.Controllers
         [InlineData(2)]
         public void Should_Be_Ok_When_Get_Filed_Error_By_Id(int id)
         {
-            var fakes = new FakeContext("ErrorOccurrenceControllerTest");
+            var fakes = new FakeContext("ErrorControllerFiledId");
 
             var fakeErrorOccurrenceService = fakes.FakeErrorOccurrenceService().Object;
             var fakeLevelService = fakes.FakeLevelService().Object;
@@ -201,14 +201,16 @@ namespace CentralErros.Test.Controllers
 
 
         [Theory]
+        //mostra 6 erros
         [InlineData(3, 1, 1, "error")]
-        [InlineData(1, 1, 2, "details")]
+        //mostra 1 erro
         [InlineData(1, 1, 0, "ip")]
-        [InlineData(1, 0, 0, "details")]
+        //lista sem erro
+        [InlineData(4, 1, 2, "details")]
         public void Should_Be_Ok_When_Get_By_Filter(int ambiente, int campoOrdenacao, int campoBuscado,
                 string textoBuscado)
         {
-            var fakes = new FakeContext("ErrorOccurrenceControllerTest");
+            var fakes = new FakeContext("ErrorControllerFilter");
 
             var fakeErrorOccurrenceService = fakes.FakeErrorOccurrenceService().Object;
             var fakeLevelService = fakes.FakeLevelService().Object;

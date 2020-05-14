@@ -64,7 +64,7 @@ namespace CentralErros.Services
                 else if (campoBuscado == 2)
                     errorsList = _context.Errors.Where(x => x.Details.Contains(textoBuscado) && x.EnvironmentId == ambiente).ToList();
                 else if (campoBuscado == 3)
-                    errorsList = _context.Errors.Where(x => x.Origin == textoBuscado && x.EnvironmentId == ambiente).ToList();
+                    errorsList = _context.Errors.Where(x => x.Origin.Contains(textoBuscado) && x.EnvironmentId == ambiente).ToList();
             }
             else if (ambiente > 0)
             {

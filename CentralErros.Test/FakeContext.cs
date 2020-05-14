@@ -150,7 +150,7 @@ namespace CentralErros.Test
                         else if (campoBuscado == 2)
                             errorsList = GetFakeData<ErrorOccurrence>().Where(x => x.Details.Contains(textoBuscado) && x.EnvironmentId == ambiente).ToList();
                         else if (campoBuscado == 3)
-                            errorsList = GetFakeData<ErrorOccurrence>().Where(x => x.Origin == textoBuscado && x.EnvironmentId == ambiente).ToList();
+                            errorsList = GetFakeData<ErrorOccurrence>().Where(x => x.Origin.Contains(textoBuscado) && x.EnvironmentId == ambiente).ToList();
                     }
                     else if (ambiente > 0)
                     {

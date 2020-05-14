@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Castle.Core.Internal;
 using CentralErros.Models;
 using CentralErros.Services;
 using CentralErros.Test.Comparers;
@@ -116,28 +117,30 @@ namespace CentralErros.Test.Services
         }
 
         [Theory]
-        ////busca pelo Details, orderna por LevelId
+        //busca pelo Details, pela frequencia de Level
         [InlineData(3, 1, 2, "details")]
-        ////busca pelo Origin, orderna por LevelId
+        //busca pelo Origin, pela frequencia de Level
         [InlineData(3, 1, 3, "ip")]
-        ////busca pelo LevelId, orderna por LevelId
+        //busca pelo LevelId, ordena pela frequencia do Origin
         [InlineData(3, 1, 1, "error")]
-        ////campo buscado = 0 e ambiente > 0, ordena por LevelId
+        //campo buscado = 0 e ambiente > 0, pela frequencia de Level
         [InlineData(3, 1, 0, "error")]
-        ////else, ordena por LevelId
+        //else, ordena pela frequencia de Level
         [InlineData(-1, 1, 0, "")]
-        ////busca pelo Details, orderna pela frequencia de Level
+        //busca pelo Details, ordena pela frequencia de Level
         [InlineData(3, 2, 2, "details")]
-        ////busca pelo Level, orderna pela frequencia de Details
+        //busca pelo Level, ordena pela frequencia de Details
         [InlineData(3, 2, 1, "error")]
-        //busca o erro mas sem campo de Ordenação
+        //busca o erro mas sem campo de Ordenação, ordena pela frequencia de Origin
         [InlineData(3, null, 2, "details")]
-        //busca o erro mas sem campo Buscado
+        //busca o erro mas sem campo Buscado, ordena pela frequencia de Level
         [InlineData(3, 2, null, "details")]
-        //busca o erro mas campo de Ordenação = 0
+        //busca o erro mas campo de Ordenação = 0, ordena pela frequencia de Origin
         [InlineData(3, 0, 2, "details")]
-        //busca o erro mas campo Buscado = 0
+        //busca o erro mas campo Buscado = 0, ordena pela frequencia de Level
         [InlineData(3, 2, 0, "details")]
+        //lista zerada
+        [InlineData(4, 1, 2, "details")]
         public void Should_Be_Ok_When_Get_By_Filter(int ambiente, int? campoOrdenacao, int? campoBuscado,
                 string textoBuscado)
         {
@@ -160,7 +163,7 @@ namespace CentralErros.Test.Services
                 else if (campoBuscado == 2)
                     errorsList = _fakeContext.GetFakeData<ErrorOccurrence>().Where(x => x.Details.Contains(textoBuscado) && x.EnvironmentId == ambiente).ToList();
                 else if (campoBuscado == 3)
-                    errorsList = _fakeContext.GetFakeData<ErrorOccurrence>().Where(x => x.Origin == textoBuscado && x.EnvironmentId == ambiente).ToList();
+                    errorsList = _fakeContext.GetFakeData<ErrorOccurrence>().Where(x => x.Origin.Contains(textoBuscado) && x.EnvironmentId == ambiente).ToList();
             }
             else if (ambiente > 0)
             {
@@ -170,7 +173,7 @@ namespace CentralErros.Test.Services
             {
                 errorsList = _fakeContext.GetFakeData<ErrorOccurrence>().ToList();
             }
-
+            
             if (errorsList.Count() > 0)
             {
 
@@ -227,6 +230,37 @@ namespace CentralErros.Test.Services
             }
 
             errorsSearchList = errorsSearchList.Where(x => x.Filed == false).ToList();
+
+            List<int> errors_int = new List<int>();
+            List<string> errors_string = new List<string>();
+
+            if (errorsSearchList.Count() > 0)
+            {
+
+                if (campoOrdenacao == 1 && campoBuscado != 1)
+                {
+                    errors_int = errorsSearchList.Select(x => x.LevelId).ToList();
+                }
+                else if (campoOrdenacao == 2)
+                {
+                    if (campoBuscado != 1)
+                    {
+                        errors_int = errorsSearchList.Select(x => x.LevelId).ToList();
+                    }
+                    else
+                    {
+                        errors_string = errorsSearchList.Select(x => x.Details).ToList();
+                    }
+                }
+                else
+                {
+                    errors_string = errorsSearchList.Select(x => x.Origin).ToList();
+                }
+            }
+            else
+            {
+                errors_string = errorsSearchList.Select(x => x.Origin).ToList();
+            }
 
             var service = new ErrorOcurrenceService(_contexto);
             var actual = service.FindByFilters(ambiente, campoOrdenacao, campoBuscado, textoBuscado);
