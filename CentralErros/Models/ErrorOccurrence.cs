@@ -37,16 +37,16 @@ namespace CentralErros.Models
         [Column("ID_EVENTS")]
         public int IdEvent { get; set; }
 
-        [Column("ENVIRONMENT_ID"), Required]
+        [Column("EnvironmentId"), Required]
         public int EnvironmentId { get; set; }
 
-        [ForeignKey("ENVIRONMENT_ID"), Required]
+        [ForeignKey("EnvironmentId"), Required]
         public virtual Environment Environment { get; set; }
 
-        [Column("LEVEL_ID"), Required]
+        [Column("LevelId"), Required]
         public int LevelId { get; set; }
 
-        [ForeignKey("LEVEL_ID"), Required]
+        [ForeignKey("LevelId"), Required]
         public virtual Level Level { get; set; }
 
     }
