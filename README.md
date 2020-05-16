@@ -72,7 +72,7 @@ O deploy da aplicação foi feito através do Heroku, utilizando o Docker Image.
 
 ### Slides
 Slides utilizados na apresentação:
-[PPT-VIDEO](https://youtu.be/MHhMMXfHxuY) <p>
+[PPT-VIDEO](https://www.youtube.com/watch?v=MDKlKLH1SAw) <p>
 ![frustrated-computer-baboon](https://media.giphy.com/media/hSAFqlKYrglGSTwORV/giphy.gif)
 
 
